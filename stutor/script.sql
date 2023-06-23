@@ -14,7 +14,7 @@ CREATE TABLE users (
 #         ('luka', 5),
 #         ('beka', 6);
 
-# select * from users;
+select * from users;
 
 DROP TABLE IF EXISTS students;
 

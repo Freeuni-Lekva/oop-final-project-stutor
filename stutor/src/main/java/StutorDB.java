@@ -18,16 +18,16 @@ public class StutorDB {
         ds.setPassword("apokalips");
 
 
-//        try {
-//            Connection connection = basicDataSource.getConnection();
-//            Statement statement = connection.createStatement();
-//            ResultSet resultSet = statement.executeQuery("select * from users;");
-//            while(resultSet.next()){
-//                System.out.println(resultSet.getString("username"));
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            Connection connection = ds.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from users;");
+            while(resultSet.next()){
+                System.out.println(resultSet.getString("username"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
