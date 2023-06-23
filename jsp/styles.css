@@ -1,0 +1,108 @@
+:root {
+    --main-blue-color: #4A75D3;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    padding: 10px 100px;
+    background-color: #E0E0E0;
+}
+
+.nav-links {
+    display: flex;
+}
+
+.nav-btn {
+    margin: 10px;
+    text-decoration: none;
+    font-size: medium;
+    font-weight: 200;
+    color: black;
+}
+
+.nav-btn:visited {
+    color: inherit;
+}
+
+.nav-btn:hover {
+    border-bottom: 1px solid black;
+}
+
+.nav-logo {
+    font-size: larger;
+    text-decoration: none;
+}
+
+.nav-logo:visited {
+    color: inherit;
+}
+
+.main-page {
+    height: 700px;
+    display: flex;
+    justify-content: center;
+}
+
+.side {
+    width: 30%;
+}
+
+.left-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto';
+    font-size: 40px;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    background-color: var(--main-blue-color);
+    border: 1px solid var(--main-blue-color);
+    padding: 8px 30px;
+    margin: 9px;
+    text-decoration: none;
+    color: white;
+}
+
+.btn:hover {
+    background-color: white;
+    border: 1px solid var(--main-blue-color);
+    color: var(--main-blue-color);
+}
+
+.btn-hollow {
+    background-color: white;
+    border: 1px solid var(--main-blue-color);
+    padding: 8px 30px;
+    margin: 9px;
+    text-decoration: none;
+    color: var(--main-blue-color);
+}
+
+.btn-hollow:hover {
+    background-color: var(--main-blue-color);
+    color: white;
+}
+
+.flex-horizonal-space-between {
+    display: flex;
+    align-items: space-between;
+    justify-content: space-between;
+}
+
