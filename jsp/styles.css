@@ -1,5 +1,6 @@
 :root {
     --main-blue-color: #4A75D3;
+    --gray-color: #E0E0E0;
 }
 
 body {
@@ -14,7 +15,7 @@ body {
     align-items: center;
     height: 30px;
     padding: 10px 100px;
-    background-color: #E0E0E0;
+    background-color: var(--gray-color);
 }
 
 .nav-links {
@@ -50,6 +51,7 @@ body {
     height: 700px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .side {
@@ -84,6 +86,7 @@ body {
     background-color: white;
     border: 1px solid var(--main-blue-color);
     color: var(--main-blue-color);
+    cursor: pointer;
 }
 
 .btn-hollow {
@@ -106,3 +109,25 @@ body {
     justify-content: space-between;
 }
 
+.form {
+    width: 400px;
+    height: 500px;
+    background-color: var(--gray-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h3 {
+    font-weight: 200;
+}
+
+.text-input {
+    font-family: 'Roboto';
+    margin: 10px 0;
+    padding: 12px;
+    width: 80%;
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 25px;
+}
