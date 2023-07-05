@@ -1,39 +1,34 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public interface Account {
-    //gets userId
+    //this method returns users id
     public int getUserId();
 
-    //gets username
+    //this method returns users username
     public String getUsername();
 
-    //gets password
-    public String getPassword();
+    //this method return users firstname
+    public String getFirstName();
 
-    //gets user types
-    public int getUserTypes();
+    //this method returns users lastname
+    public String getLastName();
 
-    //gets user bio
-    public String getBio();
+    //this method returns users password
+    public String getUserPassword();
 
-    //gets reviews
-    public ArrayList<String> getReviews();
+    //this method return users roles
+    public int getUserRoles();
 
-    //gets users Available times;
-    public AvailableTimes getTimes();
-
+    //this method changes users usernmae
     public void setUsername(String username);
 
+    //this method changes users firstname
+    public void setFirstName(String firstname);
+
+    //this method changes users lastname
+    public void setLastName(String lastname);
+
+    //this method changes users password
     public void setPassword(String password);
 
-    public void setUserType(int userType);
-
-    public void setBio(String bio);
-
-    public void addReview(String review);
-
-    public void addAvaialbleTimes(Time time);
-
-    public void removeAvailableTimes(Time time);
+    //this method changes users roles
+    public void setUserRoles(int userRoles);
 }

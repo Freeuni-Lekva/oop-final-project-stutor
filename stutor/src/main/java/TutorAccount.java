@@ -1,4 +1,4 @@
-public class StudentAccount implements Account{
+public class TutorAccount implements Account{
     private String username;
     private String password;
     private String firstname;
@@ -6,7 +6,7 @@ public class StudentAccount implements Account{
     private int userRoles;
     private final int userId;
 
-    public StudentAccount(String username, String password, String firstname, String lastname, int userRoles, int userId){
+    public TutorAccount(String username, String password, String firstname, String lastname, int userRoles, int userId){
         this.username = username;
         this.password = password;
         this.userRoles = userRoles;
@@ -58,4 +58,5 @@ public class StudentAccount implements Account{
     public void setUserRoles(int userRoles) {
         this.userRoles = userRoles;
     }
+
 }
