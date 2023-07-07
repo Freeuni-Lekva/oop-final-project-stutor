@@ -131,3 +131,39 @@ h3 {
     border: 1px solid rgb(201, 201, 201);
     border-radius: 25px;
 }
+
+.profile-page {
+    height: 500px;
+    width: 1150px;
+    background-color: var(--gray-color);
+    display: flex;
+
+    border-style: dotted;
+    border-color: var(--main-blue-color);
+}
+
+.prof-label {
+    color: var(--main-blue-color);
+    font-size: x-large;
+    font-weight: 200;
+    padding: 20px;
+}
+.profile-right {
+    height: 500px;
+    width: 650px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user_data {
+    padding-inline: 20px;
+}
+
+hr {
+    border-style: none;
+    border-top-style: dotted;
+    color: var(--main-blue-color);
+    height: 5px;
+    width: 95%;
+}

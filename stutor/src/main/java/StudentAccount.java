@@ -13,12 +13,12 @@ public class StudentAccount implements Account{
     private boolean remote;
     private String location;
 
-    public StudentAccount(String username, String password, int userType, int userId){
+    public StudentAccount(String username, String password, int userType){
         this.username = username;
         this.password = password;
         this.userType = userType;
         this.reviews = new ArrayList<String>();
-        this.userId = userId;
+
         inGroup = false;
         times = new AvailableTimes();
         remote = true;
@@ -73,6 +73,10 @@ public class StudentAccount implements Account{
 
     public void removeAvailableTimes(Time time) {
         times.removeTime(time);
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setInGroup(boolean state) { inGroup = state; }

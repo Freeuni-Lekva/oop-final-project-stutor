@@ -12,13 +12,14 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT primary key,
-    username VARCHAR(64),
-    first_name VARCHAR(64),
-    last_name VARCHAR(64),
-    phone VARCHAR(64),
-    email VARCHAR(64),
-    location VARCHAR(64),
-    bio TEXT,
+    username VARCHAR(64) UNIQUE ,
+    password VARCHAR(64),
+#     first_name VARCHAR(64),
+#     last_name VARCHAR(64),
+#     phone VARCHAR(64),
+#     email VARCHAR(64),
+#     location VARCHAR(64),
+#     bio TEXT,
     role_id INT
 );
 
@@ -27,6 +28,8 @@ CREATE TABLE users (
 #         ('beka', 6);
 
 select * from users;
+
+SELECT * FROM users WHERE username like '%%';
 
 DROP TABLE IF EXISTS students;
 
