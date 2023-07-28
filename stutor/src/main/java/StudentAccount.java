@@ -4,13 +4,22 @@ public class StudentAccount implements Account{
     private String firstname;
     private String lastname;
     private int userRoles;
-    private final int userId;
+    private int userId;
 
     public StudentAccount(String username, String password, String firstname, String lastname, int userRoles, int userId){
         this.username = username;
         this.password = password;
         this.userRoles = userRoles;
         this.userId = userId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+
+    public StudentAccount(String username, String password, String firstname, String lastname, int userRoles){
+        this.username = username;
+        this.password = password;
+        this.userRoles = userRoles;
         this.firstname = firstname;
         this.lastname = lastname;
     }
@@ -57,5 +66,10 @@ public class StudentAccount implements Account{
 
     public void setUserRoles(int userRoles) {
         this.userRoles = userRoles;
+    }
+
+    @Override
+    public void setUserId(int id) {
+        this.userId = id;
     }
 }

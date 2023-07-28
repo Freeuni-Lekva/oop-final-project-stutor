@@ -31,4 +31,6 @@ public interface Account {
 
     //this method changes users roles
     public void setUserRoles(int userRoles);
+
+    public void setUserId(int id);
 }
