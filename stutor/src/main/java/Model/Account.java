@@ -1,3 +1,4 @@
+package Model;
 public interface Account {
     //this method returns users id
     public int getUserId();
