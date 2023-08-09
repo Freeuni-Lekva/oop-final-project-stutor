@@ -150,7 +150,19 @@ public class StutorDB {
 
     // more generic update method
     public void updateUser(String username, String attribute, String value) {
-
+        try {
+            Connection connection = ds.getConnection();
+            Statement statement = connection.createStatement();
+            StringBuilder sb = new StringBuilder("UPDATE users SET ");
+            sb.append(attribute).append(" = '").append(value).append("' WHERE ");
+//            sb.append("password = '").append(password).append("' WHERE ");
+            sb.append("username = '").append(username).append("';");
+            statement.executeUpdate(sb.toString());
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("No such user to change password");
+        }
     }
 
 

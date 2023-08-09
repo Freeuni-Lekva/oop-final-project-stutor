@@ -222,9 +222,12 @@ public class StutorDBTest {
         stutorDB.addAccount(ac2);
         stutorDB.addAccount(ac3);
 
-        stutorDB.changePassword("abc", "ccc");
-        stutorDB.changePassword("cde", "aaa");
-        stutorDB.changePassword("fgh", "bbb");
+//        stutorDB.changePassword("abc", "ccc");
+//        stutorDB.changePassword("cde", "aaa");
+//        stutorDB.changePassword("fgh", "bbb");
+        stutorDB.updateUser("abc", "password", "ccc");
+        stutorDB.updateUser("cde", "password", "aaa");
+        stutorDB.updateUser("fgh", "password", "bbb");
 
         assertEquals(stutorDB.searchUsernameLike("abc").get(0).getUserPassword(), "ccc");
         assertEquals(stutorDB.searchUsernameLike("cde").get(0).getUserPassword(), "aaa");
