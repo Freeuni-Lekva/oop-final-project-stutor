@@ -16,6 +16,34 @@ public class StutorDBTest {
 
 
     @Test
+    public void subjectTest(){
+        stutorDB.removeAllUsers();
+        Account ac1 = new StudentAccount("ac1", "aaa", "name", "lastname",1);
+
+        stutorDB.addAccount(ac1);
+
+        stutorDB.addSubject(stutorDB.getAccount("ac1").getUserId(), "MATH");
+        stutorDB.addSubject(stutorDB.getAccount("ac1").getUserId(), "SCIE");
+        stutorDB.addSubject(stutorDB.getAccount("ac1").getUserId(), "ENGL");
+
+        List<String> subjects = stutorDB.getSubjects(stutorDB.getAccount("ac1").getUserId());
+        assertEquals(subjects.size(), 3);
+        assertEquals(subjects.get(0), "Mathematics");
+        assertEquals(subjects.get(1), "Science");
+        assertEquals(subjects.get(2), "English Language");
+
+        stutorDB.removeSubject(stutorDB.getAccount("ac1").getUserId(), "MATH");
+        subjects = stutorDB.getSubjects(stutorDB.getAccount("ac1").getUserId());
+        assertEquals(subjects.size(), 2);
+        assertEquals(subjects.get(0), "Science");
+        assertEquals(subjects.get(1), "English Language");
+
+        stutorDB.removeAllUsers();
+
+    }
+
+
+    @Test
     public void ratingTest(){
         stutorDB.removeAllUsers();
         Account ac1 = new StudentAccount("ac1", "aaa", "name", "lastname",1);

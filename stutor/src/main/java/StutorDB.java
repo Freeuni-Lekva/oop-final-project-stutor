@@ -297,9 +297,92 @@ public class StutorDB {
     }
 
 
+    public void addSubject(int user_id, String sub_id) {
+        try {
+            Connection connection = ds.getConnection();
+            Statement statement = connection.createStatement();
+            StringBuilder sb = new StringBuilder("INSERT INTO tutor_subjects (user_id, sub_id) VALUES (");
+            sb.append(user_id).append(" , '");
+            sb.append(sub_id).append("');");
+            statement.executeUpdate(sb.toString());
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error adding subject");;
+        }
+    }
+
+
+    public void removeSubject(int user_id, String sub_id) {
+        try {
+            Connection connection = ds.getConnection();
+            Statement statement = connection.createStatement();
+            StringBuilder sb = new StringBuilder("DELETE FROM tutor_subjects WHERE ");
+            sb.append("user_id = ").append(user_id).append(" AND sub_id = '").append(sub_id).append("';");
+            statement.executeUpdate(sb.toString());
+
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Can't remove subject");
+        }
+    }
+
+
+    public List<String> getSubjects(int user_id) {
+        List<String> subjects = new ArrayList<>();
+        try {
+            Connection connection = ds.getConnection();
+            Statement statement = connection.createStatement();
+            StringBuilder sb = new StringBuilder("select s.subject_name from tutor_subjects as ts\n" +
+                    "JOIN subjects as s ON ts.sub_id = s.sub_id");
+            sb.append(" WHERE ts.user_id = ").append(user_id).append(";");
+
+            ResultSet rs = statement.executeQuery(sb.toString());
+
+            while(rs.next()) {
+                String subject = rs.getString("subject_name");
+                subjects.add(subject);
+            }
+
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error getting subjects");
+        }
+        return subjects;
+    }
+
+    public List<String> getAllSubjectIds() {
+        List<String> subIds = new ArrayList<>();
+        try {
+            Connection connection = ds.getConnection();
+            Statement statement = connection.createStatement();
+            StringBuilder sb = new StringBuilder("select subjects.sub_id from subjects;");
+            ResultSet rs = statement.executeQuery(sb.toString());
+
+            while(rs.next()) {
+                String subId = rs.getString("sub_id");
+                subIds.add(subId);
+            }
+
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error getting subject Ids");
+        }
+        return subIds;
+    }
+
+
 
     public static void main(String[] args) {
         StutorDB stutorDB = new StutorDB();
+        List<String> list = stutorDB.getAllSubjectIds();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(stutorDB.getAllSubjectIds().get(i));
+        }
+
 //        stutorDB.addAccount(new StudentAccount("dvala", "123", "luka", "dvaladze",1));
 //        stutorDB.addAccount(new StudentAccount("dvali", "321", "luka", "dvaladze",1));
 //        stutorDB.addAccount(new StudentAccount("beka", "111", "beka", "dvaladze",1));

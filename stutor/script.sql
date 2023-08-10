@@ -48,4 +48,50 @@ CREATE TABLE ratings (
 );
 
 
+DROP TABLE IF EXISTS subjects;
+
+CREATE TABLE subjects (
+    sub_id VARCHAR(4),
+    subject_name VARCHAR(64)
+);
+
+INSERT INTO subjects (sub_id, subject_name) VALUES
+    ('MATH', 'Mathematics'),
+    ('SCIE', 'Science'),
+    ('ENGL', 'English Language'),
+    ('PHYS', 'Physics'),
+    ('CHEM', 'Chemistry'),
+    ('BIOL', 'Biology'),
+    ('HIST', 'History'),
+    ('GEOG', 'Geography'),
+    ('COMP', 'Computer Science'),
+    ('ECON', 'Economics'),
+    ('LITR', 'Literature'),
+    ('SOST', 'Social Studies'),
+    ('LANG', 'Languages'),
+    ('MUSI', 'Music'),
+    ('ARTS', 'Art'),
+    ('PETH', 'Physical Education'),
+    ('PSYC', 'Psychology'),
+    ('ENVS', 'Environmental Science'),
+    ('POLS', 'Political Science'),
+    ('BUST', 'Business Studies');
+
+select * from subjects;
+
+DROP TABLE IF EXISTS tutor_subjects;
+
+CREATE INDEX idx_column ON subjects (sub_id);
+
+CREATE TABLE tutor_subjects (
+    user_id INT,
+    sub_id VARCHAR(4),
+    foreign key (user_id) references users(user_id) ON DELETE CASCADE,
+    foreign key (sub_id) references subjects(sub_id) ON DELETE CASCADE
+);
+
+select subjects.sub_id from subjects;
+
+
+
 
