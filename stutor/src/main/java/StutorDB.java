@@ -358,12 +358,13 @@ public class StutorDB {
         try {
             Connection connection = ds.getConnection();
             Statement statement = connection.createStatement();
-            StringBuilder sb = new StringBuilder("select subjects.sub_id from subjects;");
+            StringBuilder sb = new StringBuilder("select * from subjects;");
             ResultSet rs = statement.executeQuery(sb.toString());
 
             while(rs.next()) {
                 String subId = rs.getString("sub_id");
-                subIds.add(subId);
+                String subName = rs.getString("subject_name");
+                subIds.add(subId + " - " + subName);
             }
 
             statement.close();
