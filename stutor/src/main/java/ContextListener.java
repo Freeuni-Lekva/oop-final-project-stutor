@@ -8,8 +8,17 @@ public class ContextListener implements ServletContextListener, HttpSessionListe
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext event = servletContextEvent.getServletContext();
-        StutorDB stutorDB = new StutorDB();
-        event.setAttribute("stutorDB", stutorDB);
+
+        SqlAccountsDAO accDAO = new SqlAccountsDAO();
+        SqlFriendsDAO frDAO = new SqlFriendsDAO();
+        SqlRatingsDAO rtDAO = new SqlRatingsDAO();
+        SqlSubjectsDAO subDAO = new SqlSubjectsDAO();
+
+
+        event.setAttribute("accDAO", accDAO);
+        event.setAttribute("frDAO", frDAO);
+        event.setAttribute("rtDAO", rtDAO);
+        event.setAttribute("subDAO", subDAO);
     }
 
     @Override

@@ -14,13 +14,13 @@ public class RatingServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        StutorDB stutorDB = (StutorDB) request.getServletContext().getAttribute("stutorDB");
+        SqlRatingsDAO rtDao = (SqlRatingsDAO) request.getServletContext().getAttribute("rtDAO");
         // current user is known from the Session
         Account user = (Account) request.getSession().getAttribute("user");
         // rating and id should be arguments from the page user uses to rate others. they should be stored in request object
         int rating = (Integer) request.getAttribute("rating");
         int id = (Integer) request.getAttribute("id");
-        stutorDB.addRating(user.getUserId(), id, rating);
+        rtDao.addRating(user.getUserId(), id, rating);
     }
 
 
