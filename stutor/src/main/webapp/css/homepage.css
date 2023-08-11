@@ -177,7 +177,7 @@ header > div:nth-of-type(2) > button > svg{
 
 
 .section3{
-    background-image: url('./images/Naruto-Chunin-Exam.png');
+    background-image: url('../images/Naruto-Chunin-Exam.png');
     height: 700px;
     background-repeat: no-repeat;
     background-position: 50%;
