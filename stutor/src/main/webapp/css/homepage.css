@@ -1,0 +1,228 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto';
+}
+
+a, button{
+    cursor: pointer;
+}
+
+header{
+    padding-left: 6%;
+    padding-right: 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #00E0FF;
+}
+
+header > div:first-of-type{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+header > div:first-of-type > div{
+    display: flex;
+    justify-content: space-between;
+    color: #E8FFE8;
+    gap: 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+header > div > img{
+    height: 100px;
+    width: 100px;
+}
+
+header > div > button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    height: 40px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+header > div > button:hover{
+    background-color: #fcf636;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: black;
+    transform: translateY(-7px);
+}
+
+header > div > button:active{
+    transform: translateY(-1px);
+}
+
+header > div:nth-of-type(2){
+    display: flex;
+    gap: 30px;
+}
+
+header > div:nth-of-type(2) > button > svg{
+    height: 40%;
+}
+
+
+
+.section1{
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 90px;
+    background-color: #f8f8f8;
+}
+
+.section1 > div:first-of-type{
+    display: flex;
+    justify-content: space-around;
+    gap: 80px;
+}
+
+.section1 > h3{
+    font-size: 32px;
+    margin-bottom: 35px;
+}
+
+.section1 > div:first-of-type > div{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    width: 200px;
+}
+
+.section1 > div:first-of-type > div > h4{
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.section1 > div:first-of-type > div > p{
+    color: #7b7a8c;
+}
+
+.section2{
+    padding-top: 50px;
+    padding-bottom: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.section2 > h4{
+    font-size: 20px;
+}
+
+.section2 > p{
+    width: 60%;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #7b7a8c;
+}
+
+.section2 > div:first-of-type{
+    display: flex;
+    gap: 30px;
+}
+
+.section2 > div:first-of-type > button{
+    border: 0;
+    background-color: none;
+    border-radius: 20px;
+    width: 140px;
+    height: 45px;
+    color: white;
+}
+
+.section2 >div:first-of-type > button:first-of-type{
+    background-color: #a9d622;
+}
+
+
+.section2 >div:first-of-type > button:nth-of-type(2){
+    background-color: #e97440;
+}
+
+.section2 >div:first-of-type > button:first-of-type:hover{
+    background-color: #95bd1e;
+}
+
+.section2 >div:first-of-type > button:nth-of-type(2):hover{
+    background-color: #dd5519;
+}
+
+
+
+.section3{
+    background-image: url('../images/Naruto-Chunin-Exam.png');
+    height: 700px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-color: gray;
+    background-blend-mode: multiply;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section3 > h3{
+    margin-top: 70px;
+    color: white;
+    font-size: 40px;
+    margin-bottom: 60px;
+}
+
+.section3 > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+}
+
+.section3 > div > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 30%;
+
+    color: white;
+    text-align: center;
+}
+
+.section3 > div > div > h4 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.section3 > div > div > svg{
+    width: 60%;
+    margin-bottom: 15px;
+}
+
+.section3 > div > div > p{
+    font-size: 24px;
+}

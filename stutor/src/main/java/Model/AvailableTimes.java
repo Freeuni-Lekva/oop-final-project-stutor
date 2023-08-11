@@ -1,4 +1,7 @@
+package Model;
+import java.sql.Time;
 import java.util.ArrayList;
+
 
 public class AvailableTimes {
     private ArrayList<Time> times;
