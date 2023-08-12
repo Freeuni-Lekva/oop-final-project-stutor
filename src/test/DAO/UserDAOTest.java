@@ -53,9 +53,9 @@ public class UserDAOTest extends TestCase {
     }
 
     public void testGetAllUsers() throws SQLException {
-        User newUser = new User("testUser3", "hashedPass", "John", "Doe", "johndoe@example.com");
-        User newUser1 = new User("testUser", "hashedPass", "John", "Doe", "johndoe@example.com");
-        User newUser2 = new User("3testUser", "hashedPass", "John", "Doe", "johndoe@example.com");
+        User newUser = new User("testUser3", "hashedPass", "John", "Doe", "johndoe1@example.com");
+        User newUser1 = new User("testUser", "hashedPass", "John", "Doe", "johndoe2@example.com");
+        User newUser2 = new User("3testUser", "hashedPass", "John", "Doe", "johndoe3@example.com");
         userDAO.addUser(newUser);
         userDAO.addUser(newUser1);
         userDAO.addUser(newUser2);
