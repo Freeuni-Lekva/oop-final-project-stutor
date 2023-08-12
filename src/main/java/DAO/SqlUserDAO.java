@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlUserDAO implements UserDAO {
-    private final static String USERNAME = "sqluser";
-    private final static String PASSWORD = "password";
+    private final static String USERNAME = "root";
+    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "users";
     BasicDataSource dataSource;

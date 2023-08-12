@@ -1,21 +1,15 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Arrays" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>stutor</title>
+  <link rel="stylesheet" href="css/homepage.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="css/SearchStyle.css">
 </head>
-
 <body>
 <%--navbar--%>
 <header>
@@ -40,64 +34,66 @@
   </div>
 </header>
 
-<section class = "section1">
-  <h1>Find a Tutor or Student</h1>
-  <p>Please enter the relevant information into the sections below. This will enable us to locate tutors who both specialise in the subject you require, and are in close proximity to you.</p>
+<%--naruto--%>
+<section class="section3">
+  <h3>Do You Have Some Problems Studying?</h3>
   <div>
     <div>
-      <div class="inputGroup">
-        <input type="text" required="" autocomplete="off">
-        <label for="name">Username</label>
-      </div>
+      <h4>Find the perfect tutor</h4>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
 
-      <div class="inputGroup">
-        <input type="text" required="" autocomplete="off">
-        <label for="name">Subject</label>
-      </div>
-
-      <div>
-        <label class="cyberpunk-checkbox-label">
-          <input type="checkbox" class="cyberpunk-checkbox">
-          Tutor</label>
-        <label class="cyberpunk-checkbox-label">
-          <input type="checkbox" class="cyberpunk-checkbox">
-          Student</label>
-      </div>
+      <p>Chveni daxmarebit ukve 200 adamianis sicocxle uketesobisken sheicvala.</p>
     </div>
 
-    <button class = "SearchButton">
-      <span>Search</span>
-    </button>
+    <div>
+      <h4>Choosing the right tutor</h4>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"/></svg>
+      <p>Gavimarjvet qarvelebo, xvichas kidev erti goli turinis karshi.</p>
+    </div>
   </div>
 </section>
 
-<%
-  List<String> usernames = Arrays.asList("Naruto", "Sasuke", "Sakura", "Kakashi", "BIGJOY");
-  List<String> prof = Arrays.asList("Student", "Student", "Student", "Tutor", "Tutor");
-  List<String> subjects = Arrays.asList("hokageoba", "dzmoba", "loveroba", "ninjoba", "html/css");
-  List<String> rating = Arrays.asList("3.0", "2.0", "-1.2", "3.9", "5.0");
-  String curr = "2";
-  for(int i = 0; i < usernames.size(); i++){
-    String s = "<section class = \"section" + curr;
-    s += "\">\n" + "  <div>\n" + "    <h1>";
-    s += usernames.get(i) + "(" + prof.get(i) + ")";
-    s += "</h1>\n" + "    <div>\n" + "      <p>";
-    s += "Subject: " + subjects.get(i);
-    s += "</p>\n" + "      <p>\n" + "        Rating: ";
-    s += rating.get(i);
-    s += "</p>\n" +
-            "    </div>\n" +
-            "  </div>\n" +
-            "</section>";
-    if(curr.equals("2")){
-      curr = "3";
-    }else{
-      curr = "2";
-    }
-    out.println(s);
-  }
-%>
+<%--choose--%>
+<section class="section2">
+  <img src="./images/about.png" alt="vigac kacebi">
+  <h4>SEARCH FOR ONLINE TUTORS</h4>
+  <p>At Tutor Hunt we understand finding a tutor is not always easy task. Whether searching for primary, GCSE, A-Level or an adult learner, we strive to make the process as simple as possible - listing all personal and private tutors closest to you...</p>
+  <div>
+    <button>FIND A TUTOR</button>
+    <button>BECOME A TUTOR</button>
+  </div>
+</section>
 
+
+<%--how it works--%>
+<section  class="section1">
+  <h3>HOW IT WORKS</h3>
+  <div>
+    <div>
+      <img src="./images/first.png" alt="surati ravi">
+      <h4>Search tutors online or in-person</h4>
+      <p>Search and compare online & local tutors by subject and level.</p>
+    </div>
+
+    <div>
+      <img src="./images/second.png" alt="surati ravi">
+      <h4>View tutors' qualifications</h4>
+      <p>View tutors' qualifications, feedback and experience.</p>
+    </div>
+
+    <div>
+      <img src="./images/third.png" alt="surati ravi">
+      <h4>Contact as many tutors as you like</h4>
+      <p>Contact as many tutors as you would like through our messaging system</p>
+    </div>
+
+    <div>
+      <img src="./images/fourth.png" alt="surati ravi">
+      <h4>Select your perfect tutor</h4>
+      <p>Select your perfect tutor and book your first lesson</p>
+    </div>
+  </div>
+</section>
 
 </body>
 </html>
