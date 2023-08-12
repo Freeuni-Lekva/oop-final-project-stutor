@@ -46,11 +46,9 @@ public class User{
 
     @Override
     public boolean equals(Object other) {
-        // standard two checks for equals()
         if (this == other) return true;
         if (!(other instanceof User)) return false;
 
-        // check if other point same as us
         User a = (User)other;
         return a.userId == this.userId;
     }
