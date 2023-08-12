@@ -16,7 +16,7 @@ import Model.User;
 public class AccountRegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SqlUserDAO usersDAO = (SqlUserDAO) getServletContext().getAttribute("manager");
+        SqlUserDAO usersDAO = (SqlUserDAO) getServletContext().getAttribute("users");
 
         String email = req.getParameter("email");
         String firstName = req.getParameter("firstname");
@@ -26,7 +26,7 @@ public class AccountRegisterServlet extends HttpServlet {
         String repeatPass = req.getParameter("repeatpass");
 
         if (!pass.equals(repeatPass) ) {
-            resp.sendRedirect("/register");
+            resp.sendRedirect("/register_tryagain.jsp");
         }
         try {
             usersDAO.addUser(new User(username, pass, firstName, lastName, email));
