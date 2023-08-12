@@ -35,12 +35,11 @@ public class AccountRegisterServlet extends HttpServlet {
         } else {
             try {
                 usersDAO.addUser(user);
+                req.getSession().setAttribute("currUser", user);
+                resp.sendRedirect("/MyProfilePageServlet");
             } catch (SQLException e) {
                 resp.sendRedirect("/register_tryagain.jsp");
             }
-
-            req.getSession().setAttribute("currUser", user);
-            resp.sendRedirect("/MyProfilePageServlet");
         }
     }
 
