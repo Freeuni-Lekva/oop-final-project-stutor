@@ -6,26 +6,26 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT primary key,
-    username VARCHAR(64) unique,
+    username VARCHAR(64) unique UNIQUE,
     hashedPassword VARCHAR(64),
     firstname VARCHAR(64),
     lastname VARCHAR(64),
-    email VARCHAR(64)
+    email VARCHAR(64) UNIQUE
 );
 
-DROP TABLE IF EXISTS friends;
+DROP TABLE IF EXISTS followers;
 
-CREATE TABLE friends (
+CREATE TABLE followers (
     user_id INT,
-    friend_id INT,
+    follower_id INT,
     foreign key (user_id) references users(user_id) ON DELETE CASCADE,
-    foreign key (friend_id) references users(user_id) ON DELETE CASCADE
+    foreign key (follower_id) references users(user_id) ON DELETE CASCADE,
+    CONSTRAINT check_user_not_equal_friend CHECK (user_id <> follower_id),
+    CONSTRAINT unique_user_friend_pair UNIQUE (user_id, follower_id)
 );
-
 
 
 select * from users;
-select * from friends;
 select * from ratings;
 
 

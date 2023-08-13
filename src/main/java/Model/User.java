@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 public class User{
     private int userId;
     private String username;
@@ -52,6 +54,6 @@ public class User{
 
         // check if other point same as us
         User a = (User)other;
-        return a.userId == this.userId;
+        return Objects.equals(a.email, this.email);
     }
 }

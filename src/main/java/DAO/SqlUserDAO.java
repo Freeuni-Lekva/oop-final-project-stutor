@@ -90,7 +90,9 @@ public class SqlUserDAO implements UserDAO {
             res = new User(rs.getString("username"), rs.getString("hashedpassword"),
                     rs.getString("firstname"), rs.getString("lastname"),
                     rs.getString("email"));
+            res.setUserId(rs.getInt("user_id"));
         }
+
 
         statement.close();
         connection.close();
