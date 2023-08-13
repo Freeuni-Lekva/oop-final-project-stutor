@@ -61,7 +61,7 @@
                         </div>
             
                         <div class="mt-3">
-                            <h4 class="font-13 text-uppercase">bio</h4>
+                            <h4 class="font-13 text-uppercase">bio <button class="info-btn" style="font-size: 10px; padding: 3px 10px;">Change Bio</button></h4>
                             <p class="text-muted font-13 mb-3">
                                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptates fugit reiciendis beatae error, repellat sit libero consequuntur dolore eum tempore harum placeat illum odit eaque ullam illo itaque commodi. Iusto.
                             </p>
@@ -89,6 +89,12 @@
                                 </div>
                             </div>
                         </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Change Profile Info</h5>
+                        <form method="post"><button class="info-btn" name="changePass">Change Password</button></form>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-body">

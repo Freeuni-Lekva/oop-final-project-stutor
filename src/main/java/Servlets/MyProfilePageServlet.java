@@ -15,6 +15,8 @@ public class MyProfilePageServlet extends HttpServlet {
         if (req.getParameter("logout") != null) {
             req.getSession().setAttribute("currUser", null);
             resp.sendRedirect("/index.jsp");
+        } else if (req.getParameter("changePass") != null) {
+            resp.sendRedirect("/ChangePasswordServlet");
         } else {
             req.getRequestDispatcher("my_profile.jsp").forward(req, resp);
         }
