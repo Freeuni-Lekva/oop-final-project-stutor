@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SqlUserDAO implements UserDAO {
     private final static String USERNAME = "root";
-    private final static String PASSWORD = "Ikako2525";
+    private final static String PASSWORD = "apokalips";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "users";
     BasicDataSource dataSource;
@@ -90,7 +90,9 @@ public class SqlUserDAO implements UserDAO {
             res = new User(rs.getString("username"), rs.getString("hashedpassword"),
                     rs.getString("firstname"), rs.getString("lastname"),
                     rs.getString("email"));
+            res.setUserId(rs.getInt("user_id"));
         }
+
 
         statement.close();
         connection.close();

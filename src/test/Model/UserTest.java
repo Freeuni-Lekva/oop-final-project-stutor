@@ -20,8 +20,7 @@ public class UserTest extends TestCase {
         assertEquals("kukava", user.getLastname());
         user.setUserId(1);
         assertEquals(1, user.getUserId());
-        User temp = new User("1", "2", "3", "4", "5");
-        temp.setUserId(1);
+        User temp = new User("1", "2", "3", "4", "akameGaKill@gmail.com");
         assertTrue(temp.equals(user));
     }
 }
