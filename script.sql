@@ -24,13 +24,6 @@ CREATE TABLE followers (
     CONSTRAINT unique_user_friend_pair UNIQUE (user_id, follower_id)
 );
 
-
-select * from users;
-select * from ratings;
-
-
-SELECT * FROM users WHERE username like '%%';
-
 DROP TABLE IF EXISTS ratings;
 
 CREATE TABLE ratings (
@@ -41,6 +34,15 @@ CREATE TABLE ratings (
      foreign key (rated_id) references users(user_id) ON DELETE CASCADE,
      CONSTRAINT unique_user_rated_pair UNIQUE (user_id, rated_id),
      CONSTRAINT check_user_not_equal_rated CHECK (user_id <> rated_id)
+);
+
+drop table if exists chat;
+
+create table chat (
+    message_id INT PRIMARY KEY AUTO_INCREMENT,
+    sender_id INT,
+    receiver_id INT,
+    message VARCHAR(255)
 );
 
 

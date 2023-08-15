@@ -11,10 +11,10 @@ import java.util.List;
 
 public class SqlUserDAO implements UserDAO {
     private final static String USERNAME = "root";
-    private final static String PASSWORD = "apokalips";
+    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "users";
-    BasicDataSource dataSource;
+    private BasicDataSource dataSource;
 
     public SqlUserDAO() throws ClassNotFoundException {
         dataSource = new BasicDataSource();
@@ -186,5 +186,29 @@ public class SqlUserDAO implements UserDAO {
 
         statement.close();
         connection.close();
+    }
+
+    public int getUserId(String username) throws SQLException {
+        int res = -1;
+
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement();
+
+        StringBuilder code = new StringBuilder();
+
+        statement.execute("USE " + DBNAME + ";\n");
+
+        code.append("select user_id from users where username = '").append(username).append("';");
+
+        ResultSet rs = statement.executeQuery(code.toString());
+
+        while(rs.next()){
+            res = rs.getInt("user_id");
+        }
+
+        statement.close();
+        connection.close();
+
+        return res;
     }
 }
