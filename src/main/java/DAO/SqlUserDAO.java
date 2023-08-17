@@ -40,7 +40,7 @@ public class SqlUserDAO implements UserDAO {
         code.append("'" + user.getHashedPassword() + "', ");
         code.append("'" + user.getFirstname() + "', ");
         code.append("'" + user.getLastname() + "', ");
-        code.append("'" + user.getEmail() + "')");
+        code.append("'" + user.getEmail() + "');");
 
         int check = statement.executeUpdate(code.toString());
 
@@ -116,9 +116,11 @@ public class SqlUserDAO implements UserDAO {
 
         ResultSet rs = statement.executeQuery(code.toString());
         while(rs.next()){
-            res.add(new User(rs.getString("username"), rs.getString("hashedpassword"),
+            User tmp = new User(rs.getString("username"), rs.getString("hashedpassword"),
                     rs.getString("firstname"), rs.getString("lastname"),
-                    rs.getString("email")));
+                    rs.getString("email"));
+            tmp.setUserId(rs.getInt("user_id"));
+            res.add(tmp);
         }
 
         statement.close();
@@ -180,7 +182,7 @@ public class SqlUserDAO implements UserDAO {
 
         statement.execute("USE " + DBNAME + ";\n");
 
-        code.append("DELETE FROM users;");
+        code.append("DELETE FROM ").append(TABLENAME).append(";");
 
         statement.executeUpdate(code.toString());
 

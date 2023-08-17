@@ -47,46 +47,61 @@ CREATE TABLE ratings (
 DROP TABLE IF EXISTS subjects;
 
 CREATE TABLE subjects (
-    sub_id VARCHAR(4),
+    sub_id INT AUTO_INCREMENT primary key,
     subject_name VARCHAR(64)
 );
 
-INSERT INTO subjects (sub_id, subject_name) VALUES
-    ('MATH', 'Mathematics'),
-    ('SCIE', 'Science'),
-    ('ENGL', 'English Language'),
-    ('PHYS', 'Physics'),
-    ('CHEM', 'Chemistry'),
-    ('BIOL', 'Biology'),
-    ('HIST', 'History'),
-    ('GEOG', 'Geography'),
-    ('COMP', 'Computer Science'),
-    ('ECON', 'Economics'),
-    ('LITR', 'Literature'),
-    ('SOST', 'Social Studies'),
-    ('LANG', 'Languages'),
-    ('MUSI', 'Music'),
-    ('ARTS', 'Art'),
-    ('PETH', 'Physical Education'),
-    ('PSYC', 'Psychology'),
-    ('ENVS', 'Environmental Science'),
-    ('POLS', 'Political Science'),
-    ('BUST', 'Business Studies');
+INSERT INTO subjects (subject_name) VALUES
+    ('Mathematics'),
+    ('Science'),
+    ('English Language'),
+    ('Physics'),
+    ('Chemistry'),
+    ('Biology'),
+    ('History'),
+    ('Geography'),
+    ('Computer Science'),
+    ('Economics'),
+    ('Literature'),
+    ('Social Studies'),
+    ('Languages'),
+    ('Music'),
+    ('Art'),
+    ('Physical Education'),
+    ('Psychology'),
+    ('Environmental Science'),
+    ('Political Science'),
+    ('Business Studies');
 
 select * from subjects;
 
-DROP TABLE IF EXISTS tutor_subjects;
+# DROP TABLE IF EXISTS tutor_subjects;
 
-CREATE INDEX idx_column ON subjects (sub_id);
+# CREATE INDEX idx_column ON subjects (sub_id);
 
-CREATE TABLE tutor_subjects (
+
+DROP TABLE IF EXISTS teaching_subjects;
+
+CREATE TABLE teaching_subjects (
     user_id INT,
-    sub_id VARCHAR(4),
+    sub_id INT,
     foreign key (user_id) references users(user_id) ON DELETE CASCADE,
     foreign key (sub_id) references subjects(sub_id) ON DELETE CASCADE
 );
 
-select subjects.sub_id from subjects;
+DROP TABLE IF EXISTS learning_subjects;
+
+CREATE TABLE learning_subjects (
+    user_id INT,
+    sub_id INT,
+    foreign key (user_id) references users(user_id) ON DELETE CASCADE,
+    foreign key (sub_id) references subjects(sub_id) ON DELETE CASCADE
+);
+
+select * from learning_subjects;
+
+select * from teaching_subjects;
+
 
 
 
