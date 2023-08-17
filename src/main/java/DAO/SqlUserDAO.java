@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlUserDAO implements UserDAO {
-    private final static String USERNAME = "sqluser";
-    private final static String PASSWORD = "password";
+    private final static String USERNAME = "root";
+    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "users";
-    BasicDataSource dataSource;
+    private BasicDataSource dataSource;
 
     public SqlUserDAO() throws ClassNotFoundException {
         dataSource = new BasicDataSource();
@@ -40,7 +40,7 @@ public class SqlUserDAO implements UserDAO {
         code.append("'" + user.getHashedPassword() + "', ");
         code.append("'" + user.getFirstname() + "', ");
         code.append("'" + user.getLastname() + "', ");
-        code.append("'" + user.getEmail() + "');");
+        code.append("'" + user.getEmail() + "')");
 
         int check = statement.executeUpdate(code.toString());
 
@@ -116,11 +116,9 @@ public class SqlUserDAO implements UserDAO {
 
         ResultSet rs = statement.executeQuery(code.toString());
         while(rs.next()){
-            User tmp = new User(rs.getString("username"), rs.getString("hashedpassword"),
+            res.add(new User(rs.getString("username"), rs.getString("hashedpassword"),
                     rs.getString("firstname"), rs.getString("lastname"),
-                    rs.getString("email"));
-            tmp.setUserId(rs.getInt("user_id"));
-            res.add(tmp);
+                    rs.getString("email")));
         }
 
         statement.close();
@@ -182,11 +180,35 @@ public class SqlUserDAO implements UserDAO {
 
         statement.execute("USE " + DBNAME + ";\n");
 
-        code.append("DELETE FROM ").append(TABLENAME).append(";");
+        code.append("DELETE FROM users;");
 
         statement.executeUpdate(code.toString());
 
         statement.close();
         connection.close();
+    }
+
+    public int getUserId(String username) throws SQLException {
+        int res = -1;
+
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement();
+
+        StringBuilder code = new StringBuilder();
+
+        statement.execute("USE " + DBNAME + ";\n");
+
+        code.append("select user_id from users where username = '").append(username).append("';");
+
+        ResultSet rs = statement.executeQuery(code.toString());
+
+        while(rs.next()){
+            res = rs.getInt("user_id");
+        }
+
+        statement.close();
+        connection.close();
+
+        return res;
     }
 }

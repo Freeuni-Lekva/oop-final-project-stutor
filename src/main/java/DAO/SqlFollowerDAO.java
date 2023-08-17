@@ -14,7 +14,7 @@ import java.util.List;
 public class SqlFollowerDAO implements FollowerDAO {
 
     private final static String USERNAME = "root";
-    private final static String PASSWORD = "apokalips";
+    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "followers";
 
