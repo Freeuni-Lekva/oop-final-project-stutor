@@ -38,6 +38,7 @@
 <div class="main-page">
   <form class="form" action="AccountLoginServlet" method="post">
     <h3>Login</h3>
+    <h6 style="color:red;">invalid information, try again</h6>
     <input type="text" name="email" class="text-input" placeholder="Email">
     <input type="password" name="password" class="text-input" placeholder="Password">
     <input type="submit" class="btn" value="Login">
