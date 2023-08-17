@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.Interfaces.ChatDAO;
 import Model.Message;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SqlChatDAOTest extends TestCase {
-    private SqlChatDAO chat;
+    private ChatDAO chat;
     private List<String> msgs;
     @BeforeAll
     public void setUp() throws ClassNotFoundException, SQLException {

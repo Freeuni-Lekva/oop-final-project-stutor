@@ -1,9 +1,7 @@
 package DAO.Interfaces;
 
 import Model.Message;
-import Model.User;
 
-import javax.mail.MessageAware;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -39,7 +37,7 @@ public interface ChatDAO {
     public List<Message> getConversation(int first, int second) throws SQLException;
 
     /**
-     * delets chat.
+     * deletes chat.
      */
     public void deleteChat() throws  SQLException;
 }
