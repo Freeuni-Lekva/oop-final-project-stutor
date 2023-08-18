@@ -29,4 +29,6 @@ public interface FollowerDAO {
      */
     public List<User> getFollowers(int user_id) throws SQLException;
 
+    public List<User> getFollowings(int user_id) throws SQLException;
+
 }
