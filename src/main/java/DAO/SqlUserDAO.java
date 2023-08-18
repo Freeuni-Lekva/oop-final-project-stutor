@@ -188,6 +188,7 @@ public class SqlUserDAO implements UserDAO {
         connection.close();
     }
 
+    @Override
     public int getUserId(String username) throws SQLException {
         int res = -1;
 
