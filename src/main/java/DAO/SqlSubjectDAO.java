@@ -60,7 +60,7 @@ public class SqlSubjectDAO implements SubjectDAO {
         StringBuilder sb = new StringBuilder();
 
         sb.append("DELETE FROM ").append(SUBJECTS_TABLE).append(" WHERE ");
-        sb.append("subject_name = ").append(subjectName).append(";");
+        sb.append("subject_name = '").append(subjectName).append("';");
 
         int check = statement.executeUpdate(sb.toString());
 
@@ -109,7 +109,7 @@ public class SqlSubjectDAO implements SubjectDAO {
         StringBuilder sb = new StringBuilder();
 
         sb.append("select * from ").append(SUBJECTS_TABLE);
-        sb.append(" where sub_id = '").append(id).append("';");
+        sb.append(" where sub_id = ").append(id).append(";");
 
         ResultSet rs = statement.executeQuery(sb.toString());
 

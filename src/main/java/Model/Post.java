@@ -1,44 +1,44 @@
 package Model;
 
-import java.util.Objects;
-
 public class Post {
     private String username;
-    private int postId;
+
+    private String subject;
+
     private String text;
-    private Subject subject;
 
-    public Post(String username, Subject subject, String text){
-        this.subject = subject;
-        this.username = username;
+    private int id;
+
+    public Post(String text, String username, String subject){
         this.text = text;
+        this.username = username;
+        this.subject = subject;
     }
-
-    public String getUsername(){
+    
+    public int getUsername() {
         return this.username;
-    }
-
-    public Subject getSubject(){
-        return this.subject;
     }
 
     public String getText(){
         return this.text;
     }
 
-    public int getPostId(){
-        return this.postId;
+
+    public int getSubject() {return this.subject;}
+
+    public int getId(){
+        return this.id;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setId(int id){
+        this.id = id;
     }
 
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if (!(other instanceof Post)) return false;
-
-        Post a = (Post)other;
-        return Objects.equals(a.postId, this.postId);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return id == post.id;
     }
 }

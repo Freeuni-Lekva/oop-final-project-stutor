@@ -104,6 +104,18 @@ select * from learning_subjects;
 
 select * from teaching_subjects;
 
+DROP TABLE IF EXISTS posts;
+
+CREATE TABLE post (
+    post_id INT AUTO_INCREMENT primary key,
+    user_id INT,
+    post_text TEXT,
+    sub_id INT,
+    foreign key (sub_id) references subjects(sub_id) ON DELETE CASCADE,
+    foreign key (user_id) references users(user_id) ON DELETE CASCADE
+);
+
+
 
 
 
