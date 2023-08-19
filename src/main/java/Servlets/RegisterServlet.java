@@ -28,8 +28,8 @@ public class RegisterServlet extends HttpServlet {
         String password = req.getParameter("password");
         String passwordRepeat = req.getParameter("passwordRepeat");
         String email = req.getParameter("email");
-        String firstName = req.getParameter("firstName");
-        String lastName = req.getParameter("lastName");
+        String firstName = req.getParameter("firstname");
+        String lastName = req.getParameter("lastname");
         UserDAO userDAO = (SqlUserDAO) getServletContext().getAttribute("users");
 
         boolean uniqueEmail, uniqueUsername, passCheck = (password.equals(passwordRepeat));
