@@ -1,5 +1,6 @@
 package DAO.Interfaces;
 
+import Model.POSTTYPE;
 import Model.Post;
 
 import java.sql.SQLException;
@@ -30,17 +31,18 @@ public interface PostDAO {
 
     /**
      * gets the posts of the given user from the database.
-     * @param user_id of the given user.
+     * @param username of the given user.
+     * @param type type of post
      * @return list of posts if successful.
      */
-    List<Post> getPostByUser(int user_id) throws SQLException;
+    List<Post> getPostByUser(String username, POSTTYPE type) throws SQLException;
 
 
     /**
      * gets all the posts from the database.
      * @return List of all posts.
      */
-    List<Post> getAllPosts() throws SQLException;
+    List<Post> getAllPosts(POSTTYPE type) throws SQLException;
 
     /**
      * clears all the posts from the database.
