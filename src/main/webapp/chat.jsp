@@ -20,9 +20,9 @@
   <div>
     <img src="./images/main.png" alt="surati">
     <div>
-      <a>Feed</a>
-      <a>Search</a>
-      <a>Chat</a>
+      <a href="/feed.jsp">Feed</a>
+      <a href="/search.jsp">Search</a>
+      <a href="/chat.jsp">Chat</a>
     </div>
   </div>
   <div>
@@ -33,9 +33,9 @@
       %>
     </span>
 
-    <button type="submit" name="logout" value="logout" class="default-btn">
-      Log out
-    </button>
+    <form action="/LogoutServlet" method="post">
+      <button type="submit">Log Out</button>
+    </form>
   </div>
 </header>
 

@@ -31,7 +31,7 @@ public class SqlPostDAO implements PostDAO {
     public boolean addPost(Post post) throws SQLException {
         StringBuilder code = new StringBuilder();
 
-        code.append("INSERT INTO " + TABLENAME + " (username, subject, type, text) VALUES (?, ?, ?, ? ); ");
+        code.append("INSERT INTO " + TABLENAME + " (username, subject_name, type, text) VALUES (?, ?, ?, ? ); ");
 
         Connection connection = dataSource.getConnection();
 
@@ -92,7 +92,7 @@ public class SqlPostDAO implements PostDAO {
         ResultSet rs = statement.executeQuery(sb.toString());
 
         while (rs.next()) {
-            res = new Post(rs.getString("username"), rs.getString("subject"),
+            res = new Post(rs.getString("username"), rs.getString("subject_name"),
                     rs.getString("type"),
                     rs.getString("text"));
             res.setId(post_id);
@@ -172,10 +172,10 @@ public class SqlPostDAO implements PostDAO {
         ResultSet rs = statement.executeQuery(sb.toString());
 
         while (rs.next()) {
-            Post post = new Post(rs.getString("username"), rs.getString("subject"),
+            Post post = new Post(rs.getString("username"), rs.getString("subject_name"),
                     rs.getString("type"),
                     rs.getString("text"));
-            post.setId(rs.getInt("id"));
+            post.setId(rs.getInt("post_id"));
             res.add(post);
         }
 

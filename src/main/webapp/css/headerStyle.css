@@ -62,14 +62,14 @@ header > div > button{
     outline: none;
 }
 
-header > div > button:hover{
+header > div  > button:hover{
     background-color: #fcf636;
     box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
     color: black;
     transform: translateY(-7px);
 }
 
-header > div > button:active{
+header > div  > button:active{
     transform: translateY(-1px);
 }
 

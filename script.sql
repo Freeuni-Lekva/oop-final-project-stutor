@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS subjects;
 
 CREATE TABLE subjects (
     sub_id INT AUTO_INCREMENT primary key,
-    subject_name VARCHAR(64)
+    subject_name VARCHAR(64) unique
 );
 
 INSERT INTO subjects (subject_name) VALUES
@@ -104,15 +104,18 @@ select * from learning_subjects;
 
 select * from teaching_subjects;
 
+USE stutor_db;
+
 DROP TABLE IF EXISTS posts;
 
-CREATE TABLE post (
+CREATE TABLE posts (
     post_id INT AUTO_INCREMENT primary key,
-    user_id INT,
-    post_text TEXT,
-    sub_id INT,
-    foreign key (sub_id) references subjects(sub_id) ON DELETE CASCADE,
-    foreign key (user_id) references users(user_id) ON DELETE CASCADE
+    username VARCHAR(64),
+    subject_name VARCHAR(64),
+    type VARCHAR(64),
+    text TEXT,
+    foreign key (subject_name) references subjects(subject_name) ON DELETE CASCADE,
+    foreign key (username) references users(username) ON DELETE CASCADE
 );
 
 
