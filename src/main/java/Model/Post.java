@@ -1,5 +1,7 @@
 package Model;
 
+import javax.ws.rs.POST;
+
 public class Post {
     private String username;
 
@@ -9,13 +11,16 @@ public class Post {
 
     private int id;
 
-    public Post(String text, String username, String subject){
+    private POSTTYPE type;
+
+    public Post(String username, String subject, String type, String text){
         this.text = text;
         this.username = username;
         this.subject = subject;
+        this.type = POSTTYPE.toPostType(type);
     }
     
-    public int getUsername() {
+    public String getUsername() {
         return this.username;
     }
 
@@ -23,8 +28,13 @@ public class Post {
         return this.text;
     }
 
+    public POSTTYPE getType(){
+        return this.type;
+    }
 
-    public int getSubject() {return this.subject;}
+    public String getSubject() {
+        return this.subject;
+    }
 
     public int getId(){
         return this.id;
