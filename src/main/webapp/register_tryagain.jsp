@@ -38,7 +38,7 @@
     <input type="text" name="lastname" class="text-input" placeholder="Last Name">
     <input type="text" name="username" class="text-input" placeholder="Username">
     <input type="password" name="password" class="text-input" placeholder="Password">
-    <input type="password" name="repeatpass" class="text-input" placeholder="Repeat Password">
+    <input type="password" name="passwordRepeat" class="text-input" placeholder="Repeat Password">
     <input type="submit" class="btn" value="Submit">
   </form>
   <img src="images/register-image.jpg" width="750px" height="500px">

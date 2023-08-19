@@ -1,6 +1,8 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Arrays" %>
+<%@ page import="DAO.Interfaces.SubjectDAO" %>
+<%@ page import="DAO.SqlSubjectDAO" %>
+<%@ page import="Model.Subject" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,8 +15,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/searchStyle.css">
     <link rel="stylesheet" href="css/headerStyle.css">
+
+    <link rel="stylesheet" href="css/searchStyle.css">
 </head>
 
 <body>
@@ -23,82 +26,110 @@
     <div>
         <img src="./images/main.png" alt="surati">
         <div>
-            <a>Home</a>
+            <a>Feed</a>
             <a>Search</a>
-            <a>For Students</a>
-            <a>For Tutors</a>
+            <a>Chat</a>
         </div>
     </div>
     <div>
-        <button>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
-            Login
-        </button>
-        <button>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M217.9 105.9L340.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L217.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1L32 320c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM352 416l64 0c17.7 0 32-14.3 32-32l0-256c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l64 0c53 0 96 43 96 96l0 256c0 53-43 96-96 96l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
-            Register
+    <span>
+      <%
+          String user = (String) request.getSession().getAttribute("currSession");
+          out.print(user);
+      %>
+    </span>
+
+        <button type="submit" name="logout" value="logout" class="default-btn">
+            Log out
         </button>
     </div>
 </header>
 
-<section class = "section1">
-    <h1>Find a Tutor or Student</h1>
-    <p>Please enter the relevant information into the sections below. This will enable us to locate tutors who both specialise in the subject you require, and are in close proximity to you.</p>
+<section>
     <div>
-        <div>
-            <div class="inputGroup">
-                <input type="text" required="" autocomplete="off">
-                <label for="name">Username</label>
-            </div>
-
-            <div class="inputGroup">
-                <input type="text" required="" autocomplete="off">
-                <label for="name">Subject</label>
+        <div class = "searchoptions">
+            <div>
+                <input type = "text" placeholder = "Subject...">
             </div>
 
             <div>
-                <label class="cyberpunk-checkbox-label">
-                    <input type="checkbox" class="cyberpunk-checkbox">
-                    Tutor</label>
-                <label class="cyberpunk-checkbox-label">
-                    <input type="checkbox" class="cyberpunk-checkbox">
-                    Student</label>
+                <input type = "text" placeholder = "User...">
+            </div>
+
+
+            <div>
+                <p>Sort By:</p>
+                <div>
+                    <div>
+                        <div>
+                            <label>
+                                <input type = "checkbox">
+                                <span>Date</span>
+                            </label>
+
+                            <label>
+                                <input type = "checkbox">
+                                <span>Rank</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label>
+                                <input type = "checkbox">
+                                <span>Ascending</span>
+                            </label>
+
+                            <label>
+                                <input type = "checkbox">
+                                <span>Descending</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class = "container">
+                <button>Search</button>
             </div>
         </div>
 
-        <button class = "SearchButton">
-            <span>Search</span>
-        </button>
+        <div class = "searchbottom">
+            <div class = "results">
+                <div class = "searchitem">
+                    <p>Lali Ezugbaia (69)</p>
+                    <p>Qartuli ena da qartvelebi (aswavlis)</p>
+                    <p>Me var lali, da maqvs tvali, gamabrazeb, vai sheni brali. chemi moswavlea dvali. da maqvs rbili dzvali. damemarta chvali. ar davtove kvali. kibo kibo kibo. ver momkla, 1-0. sanam cocxali var qartvelebis mwvalebeli var heheee. diax es me var. me movuge bolo astaxas. me movuge bolo bendus. me movuge bolo dvals.</p>
+
+                    <div>
+                        <button>
+                            <div class="svg-wrapper-1">
+                                <div class="svg-wrapper">
+                                    <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z" fill="currentColor"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <span>CHAT</span>
+                        </button>
+                    </div>
+                </div>
+                <div class = "searchitem"> </div>
+                <div class = "searchitem"> </div>
+                <div class = "searchitem"> </div>
+                <div class = "searchitem"> </div>
+                <div class = "searchitem"> </div>
+                <div class = "searchitem"> </div>
+                <div class = "searchitem"> </div>
+                <div class = "searchitem"> </div>
+
+            </div>
+        </div>
+
     </div>
 </section>
-
-<%
-    List<String> usernames = Arrays.asList("Naruto", "Sasuke", "Sakura", "Kakashi", "BIGJOY");
-    List<String> prof = Arrays.asList("Student", "Student", "Student", "Tutor", "Tutor");
-    List<String> subjects = Arrays.asList("hokageoba", "dzmoba", "loveroba", "ninjoba", "html/css");
-    List<String> rating = Arrays.asList("3.0", "2.0", "-1.2", "3.9", "5.0");
-    String curr = "2";
-    for(int i = 0; i < usernames.size(); i++){
-        String s = "<section class = \"section" + curr;
-        s += "\">\n" + "  <div>\n" + "    <h1>";
-        s += usernames.get(i) + "(" + prof.get(i) + ")";
-        s += "</h1>\n" + "    <div>\n" + "      <p>";
-        s += "Subject: " + subjects.get(i);
-        s += "</p>\n" + "      <p>\n" + "        Rating: ";
-        s += rating.get(i);
-        s += "</p>\n" +
-                "    </div>\n" +
-                "  </div>\n" +
-                "</section>";
-        if(curr.equals("2")){
-            curr = "3";
-        }else{
-            curr = "2";
-        }
-        out.println(s);
-    }
-%>
-
 
 </body>
 </html>

@@ -25,13 +25,17 @@
       <a>Chat</a>
     </div>
   </div>
-  <div class = "userProfile">
-    <a>
+  <div>
+    <span>
       <%
-        String currUser = (String) request.getSession().getAttribute("currSession");
-        out.print(currUser);
+        String user = (String) request.getSession().getAttribute("currSession");
+        out.print(user);
       %>
-    </a>
+    </span>
+
+    <button type="submit" name="logout" value="logout" class="default-btn">
+      Log out
+    </button>
   </div>
 </header>
 
