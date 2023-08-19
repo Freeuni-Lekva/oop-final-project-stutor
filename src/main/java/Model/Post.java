@@ -1,35 +1,30 @@
 package Model;
 
 public class Post {
-    private int userId;
+    private String username;
 
-    private int subId;
+    private String subject;
 
     private String text;
 
     private int id;
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public Post(String text){
+    public Post(String text, String username, String subject){
         this.text = text;
+        this.username = username;
+        this.subject = subject;
+    }
+    
+    public int getUsername() {
+        return this.username;
     }
 
     public String getText(){
         return this.text;
     }
 
-    public void setText(String text) {this.text = text;}
 
-    public void setSubId(int subId) {this.subId = subId;}
-
-    public int getSubId() {return this.subId;}
+    public int getSubject() {return this.subject;}
 
     public int getId(){
         return this.id;

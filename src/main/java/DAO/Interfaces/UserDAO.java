@@ -43,7 +43,8 @@ public interface UserDAO {
 
     /**
      * changes users password.
-     * @param email,newPassword of the user
+     * @param email of the user
+     * @param newPassword new password
      * @return false if some kind of error occurred or user could not change the password. returns true otherwise.
      */
     public boolean setPassword(String email, String newPassword) throws SQLException;
@@ -58,4 +59,11 @@ public interface UserDAO {
      * deletes every user in the table.
      */
     public void clearUsers() throws SQLException;
+
+    /**
+     * gets users id by username
+     * @param username of the user
+     * @return -1 if some kind of error occurred or user could not be found. returns users id otherwise.
+     */
+    public int getUserId(String username) throws SQLException;
 }

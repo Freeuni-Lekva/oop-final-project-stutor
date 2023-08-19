@@ -14,7 +14,7 @@ import java.util.List;
 public class SqlFollowerDAO implements FollowerDAO {
 
     private final static String USERNAME = "root";
-    private final static String PASSWORD = "apokalips";
+    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "followers";
 
@@ -90,5 +90,30 @@ public class SqlFollowerDAO implements FollowerDAO {
         connection.close();
 
         return followers;
+    }
+
+    @Override
+    public List<User> getFollowings(int user_id) throws SQLException {
+        List<User> followings = new ArrayList<>();
+
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT users.* FROM users JOIN ").append(TABLENAME).append(" AS f ON users.user_id = f.user_id ");
+        sb.append(" WHERE f.follower_id = ").append(user_id).append(";");
+
+        ResultSet rs = statement.executeQuery(sb.toString());
+
+        while (rs.next()) {
+            followings.add(new User(rs.getString("username"), rs.getString("hashedpassword"),
+                    rs.getString("firstname"), rs.getString("lastname"),
+                    rs.getString("email")));
+        }
+
+        statement.close();
+        connection.close();
+
+        return followings;
     }
 }

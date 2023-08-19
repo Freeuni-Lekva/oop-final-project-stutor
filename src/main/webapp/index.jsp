@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>stutor</title>
-  <link rel="stylesheet" href="css/loginStyle.css">
+  <title>Stutor</title>
+  <link rel="stylesheet" href="css/homeStyle.css">
   <link rel="stylesheet" href="css/headerStyle.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,39 +16,79 @@
 <header>
   <div>
     <img src="./images/main.png" alt="surati">
-    <div>
-      <a>Home</a>
-      <a>Search</a>
-      <a>For Students</a>
-      <a>For Tutors</a>
-    </div>
+  </div>
+  <div>
+    <button onclick="window.location.href='LoginServlet';">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+      Login
+    </button>
+    <button onclick="window.location.href='RegisterServlet';">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M217.9 105.9L340.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L217.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1L32 320c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM352 416l64 0c17.7 0 32-14.3 32-32l0-256c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l64 0c53 0 96 43 96 96l0 256c0 53-43 96-96 96l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+      Register
+    </button>
   </div>
 </header>
 
-<div class="card">
-  <div class="card2">
-    <form class="form">
-      <p id="heading">Login</p>
-      <div class="field">
-        <svg viewBox="0 0 16 16" fill="currentColor" height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="input-icon">
-          <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"></path>
-        </svg>
-        <input type="text" class="input-field" placeholder="Email" autocomplete="off">
-      </div>
-      <div class="field">
-        <svg viewBox="0 0 16 16" fill="currentColor" height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="input-icon">
-          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
-        </svg>
-        <input type="password" class="input-field" placeholder="Password">
-      </div>
-      <div class="btn">
-        <button class="button1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-        <button class="button2">Sign Up</button>
-      </div>
-      <button class="button3">Forgot Password</button>
-    </form>
+<%--naruto--%>
+<section class="section3">
+  <h3>Do You Have Some Problems Studying?</h3>
+  <div>
+    <div>
+      <h4>Find the perfect tutor</h4>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+
+      <p>Chveni daxmarebit ukve 200 adamianis sicocxle uketesobisken sheicvala.</p>
+    </div>
+
+    <div>
+      <h4>Choosing the right tutor</h4>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"/></svg>
+      <p>Gavimarjvet qarvelebo, xvichas kidev erti goli turinis karshi.</p>
+    </div>
   </div>
-</div>
+</section>
+
+<%--choose--%>
+<section class="section2">
+  <img src="./images/about.png" alt="vigac kacebi">
+  <h4>SEARCH FOR ONLINE TUTORS</h4>
+  <p>At Tutor Hunt we understand finding a tutor is not always easy task. Whether searching for primary, GCSE, A-Level or an adult learner, we strive to make the process as simple as possible - listing all personal and private tutors closest to you...</p>
+  <div>
+    <button>FIND A TUTOR</button>
+    <button>BECOME A TUTOR</button>
+  </div>
+</section>
+
+
+<%--how it works--%>
+<section  class="section1">
+  <h3>HOW IT WORKS</h3>
+  <div>
+    <div>
+      <img src="./images/first.png" alt="surati ravi">
+      <h4>Search tutors online or in-person</h4>
+      <p>Search and compare online & local tutors by subject and level.</p>
+    </div>
+
+    <div>
+      <img src="./images/second.png" alt="surati ravi">
+      <h4>View tutors' qualifications</h4>
+      <p>View tutors' qualifications, feedback and experience.</p>
+    </div>
+
+    <div>
+      <img src="./images/third.png" alt="surati ravi">
+      <h4>Contact as many tutors as you like</h4>
+      <p>Contact as many tutors as you would like through our messaging system</p>
+    </div>
+
+    <div>
+      <img src="./images/fourth.png" alt="surati ravi">
+      <h4>Select your perfect tutor</h4>
+      <p>Select your perfect tutor and book your first lesson</p>
+    </div>
+  </div>
+</section>
 
 </body>
 </html>

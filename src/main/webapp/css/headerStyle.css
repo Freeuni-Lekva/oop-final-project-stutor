@@ -78,6 +78,15 @@ header > div:nth-of-type(2){
     gap: 30px;
 }
 
-header > div:nth-of-type(2) > button > svg{
+header > div:nth-of-type(2) > button > svg {
     height: 40%;
+}
+
+header > div:nth-of-type(2) {
+    display: flex;
+    flex-direction: row;
+}
+
+header > div:nth-of-type(2) > span{
+    padding-top: 11px;
 }
