@@ -43,11 +43,11 @@ public class RegisterServlet extends HttpServlet {
 
         if (uniqueUsername && uniqueEmail && passCheck) {
             User newUser = new User(username, getHash(password), firstName, lastName, email);
-            int newCurrentSession;
+            String newCurrentSession;
 
             try {
                 userDAO.addUser(newUser);
-                newCurrentSession = userDAO.getUserId(username);
+                newCurrentSession = username;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -55,7 +55,7 @@ public class RegisterServlet extends HttpServlet {
             HttpSession currSession = req.getSession();
             currSession.setAttribute("currSession", newCurrentSession);
 
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/homepage.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/feed.jsp");
             dispatcher.forward(req, resp);
             return;
         }

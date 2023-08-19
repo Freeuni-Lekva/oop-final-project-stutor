@@ -1,4 +1,4 @@
-package Servlets;
+package Listeners;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -43,12 +43,12 @@ public class ListenerClass implements ServletContextListener, HttpSessionListene
 
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        httpSessionEvent.getSession().setAttribute("currUser", null);
+        httpSessionEvent.getSession().setAttribute("currSession", null);
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        httpSessionEvent.getSession().setAttribute("currUser", null);
+        httpSessionEvent.getSession().removeAttribute("currSession");
     }
     
 }

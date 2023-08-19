@@ -34,9 +34,9 @@ public class LoginServlet extends HttpServlet {
         }
 
         if(isValid){
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/homepage.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/feed.jsp");
             try {
-                req.getSession().setAttribute("currSession", userDAO.getUserId(userDAO.getUserByEmail(email).getUsername()));
+                req.getSession().setAttribute("currSession", userDAO.getUserByEmail(email).getUsername());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
