@@ -5,8 +5,7 @@ USE stutor_db;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-    user_id INT AUTO_INCREMENT primary key,
-    username VARCHAR(64) unique UNIQUE,
+    username VARCHAR(64) primary key,
     hashedPassword VARCHAR(64),
     firstname VARCHAR(64),
     lastname VARCHAR(64),
@@ -49,8 +48,8 @@ create table chat (
 DROP TABLE IF EXISTS subjects;
 
 CREATE TABLE subjects (
-    sub_id INT AUTO_INCREMENT primary key,
-    subject_name VARCHAR(64) unique
+    sub_id INT AUTO_INCREMENT,
+    subject_name VARCHAR(64) primary key
 );
 
 INSERT INTO subjects (subject_name) VALUES
@@ -109,15 +108,14 @@ USE stutor_db;
 DROP TABLE IF EXISTS posts;
 
 CREATE TABLE posts (
-    post_id INT AUTO_INCREMENT primary key,
-    username VARCHAR(64),
-    subject_name VARCHAR(64),
-    type VARCHAR(64),
-    text TEXT,
-    foreign key (subject_name) references subjects(subject_name) ON DELETE CASCADE,
-    foreign key (username) references users(username) ON DELETE CASCADE
+   post_id INT AUTO_INCREMENT PRIMARY KEY,
+   username VARCHAR(64),
+   subject_name VARCHAR(64),
+   type VARCHAR(64),
+   text TEXT,
+   FOREIGN KEY (subject_name) REFERENCES subjects(subject_name) ON DELETE CASCADE,
+   FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
-
 
 
 

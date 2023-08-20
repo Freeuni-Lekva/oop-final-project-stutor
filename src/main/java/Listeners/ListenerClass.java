@@ -8,13 +8,13 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import DAO.*;
 import DAO.Interfaces.ChatDAO;
 import DAO.Interfaces.FollowerDAO;
 import DAO.Interfaces.PostDAO;
-import DAO.SqlChatDAO;
-import DAO.SqlFollowerDAO;
-import DAO.SqlPostDAO;
-import DAO.SqlUserDAO;
+import DAO.Interfaces.SubjectDAO;
+
+import java.sql.SQLException;
 
 @WebListener
 public class ListenerClass implements ServletContextListener, HttpSessionListener {
@@ -27,20 +27,30 @@ public class ListenerClass implements ServletContextListener, HttpSessionListene
 
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
+        ConnectionPool connectionPool;
+        try {
+            connectionPool = new ConnectionPool();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         SqlUserDAO users;
         FollowerDAO followers;
         ChatDAO chat;
         PostDAO posts;
+        SubjectDAO subjects;
         try {
             users = new SqlUserDAO();
             followers = new SqlFollowerDAO();
             chat = new SqlChatDAO();
             posts = new SqlPostDAO();
+            subjects = new SqlSubjectDAO();
             ServletContext ctx = arg0.getServletContext();
             ctx.setAttribute("users", users);
             ctx.setAttribute("followers", followers);
             ctx.setAttribute("chatdao", chat);
             ctx.setAttribute("posts", posts);
+            ctx.setAttribute("subjects", subjects);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

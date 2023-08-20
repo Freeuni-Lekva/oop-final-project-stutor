@@ -3,7 +3,6 @@ package Model;
 import java.util.Objects;
 
 public class User{
-    private int userId;
     private String username;
     private String email;
     private String firstname;
@@ -16,10 +15,6 @@ public class User{
         this.hashedPassword = hashedPassword;
         this.firstname = firstname;
         this.lastname = lastname;
-    }
-
-    public int getUserId() {
-        return userId;
     }
 
     public String getUsername() {
@@ -42,16 +37,12 @@ public class User{
         return lastname;
     }
 
-    public void setUserId(int userId){
-        this.userId = userId;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
         if (!(other instanceof User)) return false;
 
         User a = (User)other;
-        return Objects.equals(a.email, this.email);
+        return Objects.equals(a.username, this.username);
     }
 }

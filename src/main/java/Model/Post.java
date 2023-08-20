@@ -1,8 +1,6 @@
 package Model;
 
-import javax.ws.rs.POST;
-
-public class Post {
+public class Post implements Comparable<Post>{
     private String username;
 
     private String subject;
@@ -51,4 +49,10 @@ public class Post {
         Post post = (Post) o;
         return id == post.id;
     }
+
+    @Override
+    public int compareTo(Post other) {
+        return Integer.compare(other.id, this.id);
+    }
+
 }

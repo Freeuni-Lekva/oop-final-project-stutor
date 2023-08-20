@@ -30,9 +30,9 @@ public interface UserDAO {
     /**
      * searches the user by his/her username.
      * @param username to be added
-     * @return false if some kind of error occurred or user could not be found. returns true otherwise.
+     * @return null if some kind of error occurred or user could not be found. returns User otherwise.
      */
-    public List<User> getUsersByUsername(String username) throws SQLException;
+    public User getUserByUsername(String username) throws SQLException;
 
     /**
      * checks if the users email and password is correct and return true if it is.
@@ -50,10 +50,11 @@ public interface UserDAO {
     public boolean setPassword(String email, String newPassword) throws SQLException;
 
     /**
-     * gets all users from table.
+     * searches users which have same prefix of the email
+     * @param prefix prefix of the desired one
      * @return list of all the users;
      */
-    public List<User> getAllUsers() throws SQLException;
+    public List<User> searchUsersByUsername(String prefix) throws SQLException;
 
     /**
      * deletes every user in the table.
@@ -61,9 +62,8 @@ public interface UserDAO {
     public void clearUsers() throws SQLException;
 
     /**
-     * gets users id by username
-     * @param username of the user
-     * @return -1 if some kind of error occurred or user could not be found. returns users id otherwise.
+     * get all users in the database
+     * @return list of All users in database;
      */
-    public int getUserId(String username) throws SQLException;
+    public List<User> getAllUsers() throws SQLException;
 }

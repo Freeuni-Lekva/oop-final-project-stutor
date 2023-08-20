@@ -3,16 +3,16 @@ package Model;
 public enum POSTTYPE {
     TEACH,
     LEARN,
-    BOTH;
+    ALL;
     public String toString(){
         if(this == TEACH) return "teach";
-        if(this == BOTH) return "both";
-        return "learn";
+        if(this == LEARN) return "learn";
+        return "all";
     }
 
     public static POSTTYPE toPostType(String s){
         if(s.equals("teach")) return TEACH;
-        if(s.equals("both")) return BOTH;
-        return LEARN;
+        if(s.equals("learn")) return LEARN;
+        return ALL;
     }
 }

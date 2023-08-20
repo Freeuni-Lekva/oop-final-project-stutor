@@ -9,17 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlChatDAO implements ChatDAO {
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "chat";
-    private BasicDataSource dataSource;
+
     public SqlChatDAO() throws ClassNotFoundException {
-        dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/" + DBNAME);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
-        Class.forName("com.mysql.cj.jdbc.Driver");
+
     }
 
     @Override
@@ -28,7 +22,7 @@ public class SqlChatDAO implements ChatDAO {
 
         code.append("INSERT INTO " + TABLENAME + " (sender_id, receiver_id, message) VALUES (?, ?, ? ); ");
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
 
         Statement st = connection.createStatement();
         st.execute("USE " + DBNAME + ";\n");
@@ -43,7 +37,7 @@ public class SqlChatDAO implements ChatDAO {
         int check = statement.executeUpdate();
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return check == 1;
     }
@@ -55,7 +49,7 @@ public class SqlChatDAO implements ChatDAO {
         code.append("DELETE FROM ").append(TABLENAME).append(" WHERE ");
         code.append("(sender_id = ? and receiver_id = ?) or (sender_id = ? and receiver_id = ?)\n");
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
 
         Statement st = connection.createStatement();
         st.execute("USE " + DBNAME + ";\n");
@@ -71,7 +65,7 @@ public class SqlChatDAO implements ChatDAO {
         int check = statement.executeUpdate();
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return check == 1;
     }
@@ -85,7 +79,7 @@ public class SqlChatDAO implements ChatDAO {
         code.append("sender_id = ? or receiver_id = ?\n");
         code.append("order by message_id desc;");
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
 
         Statement st = connection.createStatement();
         st.execute("USE " + DBNAME + ";\n");
@@ -105,6 +99,8 @@ public class SqlChatDAO implements ChatDAO {
             if(user_id != id2 && !res.contains(id2)) res.add(id2);
         }
 
+        statement.close();
+        ConnectionPool.releaseConnection(connection);
         return res;
     }
 
@@ -117,7 +113,7 @@ public class SqlChatDAO implements ChatDAO {
         code.append("(sender_id = ? and receiver_id = ?) or (sender_id = ? and receiver_id = ?)\n");
         code.append("order by message_id desc;");
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
 
         Statement st = connection.createStatement();
         st.execute("USE " + DBNAME + ";\n");
@@ -138,13 +134,13 @@ public class SqlChatDAO implements ChatDAO {
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return res;
     }
 
     public void deleteChat() throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         StringBuilder code = new StringBuilder();
@@ -156,6 +152,6 @@ public class SqlChatDAO implements ChatDAO {
         statement.executeUpdate(code.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
     }
 }

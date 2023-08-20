@@ -87,4 +87,5 @@ section > div:nth-of-type(4) > div > div > p {
 section > div:nth-of-type(4) > div > div > button{
     width: 47%;
     height: 30px;
+    border-radius: 30px;
 }

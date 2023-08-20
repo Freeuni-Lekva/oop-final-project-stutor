@@ -9,26 +9,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SqlRatingDAO implements RatingDAO {
-
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "ratings";
 
-    BasicDataSource dataSource;
-
     public SqlRatingDAO() throws ClassNotFoundException {
-        dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/" + DBNAME);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
-        Class.forName("com.mysql.cj.jdbc.Driver");
+
     }
 
     @Override
     public boolean addRating(int user_id, int rated_id, int rating) throws SQLException {
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -43,7 +34,7 @@ public class SqlRatingDAO implements RatingDAO {
 
         int check = statement.executeUpdate(sb.toString());
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return check == 1;
     }
@@ -53,7 +44,7 @@ public class SqlRatingDAO implements RatingDAO {
         int count = 0;
         int sum = 0;
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         StringBuilder sb = new StringBuilder("SELECT * FROM ");
@@ -68,7 +59,7 @@ public class SqlRatingDAO implements RatingDAO {
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         if (count == 0) {
             return 0;
