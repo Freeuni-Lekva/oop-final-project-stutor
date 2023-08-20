@@ -37,12 +37,14 @@
     </div>
   </div>
   <div>
-    <span>
+    <form action="/MyProfilePageServlet" method="post">
+      <button type="submit"><span>
       <%
         String user = (String) request.getSession().getAttribute("currSession");
         out.print(user);
       %>
-    </span>
+    </span></button>
+    </form>
 
     <form action="/LogoutServlet" method="post">
       <button type="submit">Log Out</button>

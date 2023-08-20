@@ -15,10 +15,10 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS followers;
 
 CREATE TABLE followers (
-    user_id INT,
-    follower_id INT,
-    foreign key (user_id) references users(user_id) ON DELETE CASCADE,
-    foreign key (follower_id) references users(user_id) ON DELETE CASCADE,
+    user_id VARCHAR(64),
+    follower_id VARCHAR(64),
+    foreign key (user_id) references users(username) ON DELETE CASCADE,
+    foreign key (follower_id) references users(username) ON DELETE CASCADE,
     CONSTRAINT check_user_not_equal_friend CHECK (user_id <> follower_id),
     CONSTRAINT unique_user_friend_pair UNIQUE (user_id, follower_id)
 );
@@ -26,11 +26,11 @@ CREATE TABLE followers (
 DROP TABLE IF EXISTS ratings;
 
 CREATE TABLE ratings (
-     user_id INT,
-     rated_id INT,
+     user_id VARCHAR(64),
+     rated_id VARCHAR(64),
      rating_value TINYINT UNSIGNED CHECK (rating_value BETWEEN 1 AND 5),
-     foreign key (user_id) references users(user_id) ON DELETE CASCADE,
-     foreign key (rated_id) references users(user_id) ON DELETE CASCADE,
+     foreign key (user_id) references users(username) ON DELETE CASCADE,
+     foreign key (rated_id) references users(username) ON DELETE CASCADE,
      CONSTRAINT unique_user_rated_pair UNIQUE (user_id, rated_id),
      CONSTRAINT check_user_not_equal_rated CHECK (user_id <> rated_id)
 );
@@ -48,8 +48,8 @@ create table chat (
 DROP TABLE IF EXISTS subjects;
 
 CREATE TABLE subjects (
-    sub_id INT AUTO_INCREMENT,
-    subject_name VARCHAR(64) primary key
+    sub_id INT AUTO_INCREMENT primary key,
+    subject_name VARCHAR(64)
 );
 
 INSERT INTO subjects (subject_name) VALUES
@@ -84,18 +84,18 @@ select * from subjects;
 DROP TABLE IF EXISTS teaching_subjects;
 
 CREATE TABLE teaching_subjects (
-    user_id INT,
+    user_id VARCHAR(64),
     sub_id INT,
-    foreign key (user_id) references users(user_id) ON DELETE CASCADE,
+    foreign key (user_id) references users(username) ON DELETE CASCADE,
     foreign key (sub_id) references subjects(sub_id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS learning_subjects;
 
 CREATE TABLE learning_subjects (
-    user_id INT,
+    user_id VARCHAR(64),
     sub_id INT,
-    foreign key (user_id) references users(user_id) ON DELETE CASCADE,
+    foreign key (user_id) references users(username) ON DELETE CASCADE,
     foreign key (sub_id) references subjects(sub_id) ON DELETE CASCADE
 );
 

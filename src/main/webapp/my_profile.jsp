@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Model.User" %>
+<%@ page import="DAO.SqlUserDAO" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,13 +13,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/SearchStyle.css">
+    <link rel="stylesheet" href="css/headerStyle.css">
     <link rel="stylesheet" href="css/styles.css">
     <title>Document</title>
 </head>
 <body style="display: flex; flex-direction: column;">
 
     <%      
-        User currUser = (User) session.getAttribute("currUser");
+        SqlUserDAO users = (SqlUserDAO) request.getServletContext().getAttribute("users");
+        String user = (String) request.getSession().getAttribute("currSession");
+        User currUser = users.getUserByUsername(user);
+
         String email = currUser.getEmail();
         String firstName = currUser.getFirstname();
         String lastName = currUser.getLastname();
@@ -31,10 +36,9 @@
         <div>
         <img src="images/main.png" alt="surati">
         <div>
-            <a>Home</a>
-            <a>Search</a>
-            <a>For Students</a>
-            <a>For Tutors</a>
+            <a href="/feed.jsp">Feed</a>
+            <a href="/search.jsp">Search</a>
+            <a href="/chat.jsp">Chat</a>
         </div>
         </div>
         <div>
