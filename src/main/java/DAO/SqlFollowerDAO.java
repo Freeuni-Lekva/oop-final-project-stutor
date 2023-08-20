@@ -12,25 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlFollowerDAO implements FollowerDAO {
-
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "followers";
 
-    BasicDataSource dataSource;
 
     public SqlFollowerDAO() throws ClassNotFoundException {
-        dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/" + DBNAME);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
-        Class.forName("com.mysql.cj.jdbc.Driver");
+
     }
 
     @Override
     public boolean addFollower(int user_id, int follower_id) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -43,14 +35,14 @@ public class SqlFollowerDAO implements FollowerDAO {
         int check = statement.executeUpdate(sb.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return check == 1;
     }
 
     @Override
     public boolean removeFollower(int user_id, int follower_id) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -62,7 +54,7 @@ public class SqlFollowerDAO implements FollowerDAO {
         int check = statement.executeUpdate(sb.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return check == 1;
     }
@@ -71,7 +63,7 @@ public class SqlFollowerDAO implements FollowerDAO {
     public List<User> getFollowers(int user_id) throws SQLException {
         List<User> followers = new ArrayList<>();
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         StringBuilder sb = new StringBuilder();
@@ -87,7 +79,7 @@ public class SqlFollowerDAO implements FollowerDAO {
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return followers;
     }
@@ -96,7 +88,7 @@ public class SqlFollowerDAO implements FollowerDAO {
     public List<User> getFollowings(int user_id) throws SQLException {
         List<User> followings = new ArrayList<>();
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         StringBuilder sb = new StringBuilder();
@@ -112,7 +104,7 @@ public class SqlFollowerDAO implements FollowerDAO {
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return followings;
     }

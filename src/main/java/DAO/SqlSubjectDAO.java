@@ -13,26 +13,16 @@ import java.util.List;
 
 public class SqlSubjectDAO implements SubjectDAO {
 
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "apokalips";
     private final static String DBNAME = "stutor_db";
     private final static String SUBJECTS_TABLE = "subjects";
-    private final static String LEARNING_TABLE = "learning_subjects";
-    private final static String TEACHING_TABLE = "teaching_subjects";
-
-    BasicDataSource dataSource;
 
     public SqlSubjectDAO() throws ClassNotFoundException {
-        dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/" + DBNAME);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
-        Class.forName("com.mysql.cj.jdbc.Driver");
+
     }
 
     @Override
     public boolean addSubject(Subject subject) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -45,14 +35,14 @@ public class SqlSubjectDAO implements SubjectDAO {
         int check = statement.executeUpdate(sb.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return check == 1;
     }
 
     @Override
     public boolean removeSubject(String subjectName) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -65,7 +55,7 @@ public class SqlSubjectDAO implements SubjectDAO {
         int check = statement.executeUpdate(sb.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return check == 1;
     }
@@ -74,7 +64,7 @@ public class SqlSubjectDAO implements SubjectDAO {
     public Subject getSubjectByName(String subjectName) throws SQLException {
         Subject res = null;
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -92,7 +82,7 @@ public class SqlSubjectDAO implements SubjectDAO {
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return res;
     }
@@ -101,7 +91,7 @@ public class SqlSubjectDAO implements SubjectDAO {
     public Subject getSubjectById(int id) throws SQLException {
         Subject res = null;
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -119,7 +109,7 @@ public class SqlSubjectDAO implements SubjectDAO {
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return res;
     }
@@ -128,7 +118,7 @@ public class SqlSubjectDAO implements SubjectDAO {
     public List<Subject> getAllSubjects() throws SQLException {
         List<Subject> res = new ArrayList<>();
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -141,12 +131,11 @@ public class SqlSubjectDAO implements SubjectDAO {
 
         while(rs.next()) {
             Subject tmp = new Subject(rs.getString("subject_name"));
-            tmp.setId(rs.getInt("sub_id"));
             res.add(tmp);
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return res;
     }
@@ -154,7 +143,7 @@ public class SqlSubjectDAO implements SubjectDAO {
     @Override
     public void clearSubjects() throws SQLException {
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         StringBuilder sb = new StringBuilder();
@@ -166,49 +155,7 @@ public class SqlSubjectDAO implements SubjectDAO {
         statement.executeUpdate(sb.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
     }
 
-    @Override
-    public boolean addLearningSubject(int user_id, int sub_id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
-
-        statement.execute("USE " + DBNAME + ";\n");
-
-        StringBuilder code = new StringBuilder();
-
-        code.append("INSERT INTO " + LEARNING_TABLE + " (user_id, sub_id) VALUES (");
-        code.append("'" + user_id+ "', ");
-        code.append("'" + sub_id + "');");
-
-        int check = statement.executeUpdate(code.toString());
-
-        statement.close();
-        connection.close();
-
-        return check == 1;
-
-    }
-
-    @Override
-    public boolean addTeachingSubject(int user_id, int sub_id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
-
-        statement.execute("USE " + DBNAME + ";\n");
-
-        StringBuilder code = new StringBuilder();
-
-        code.append("INSERT INTO " + TEACHING_TABLE + " (user_id, sub_id) VALUES (");
-        code.append("'" + user_id+ "', ");
-        code.append("'" + sub_id + "');");
-
-        int check = statement.executeUpdate(code.toString());
-
-        statement.close();
-        connection.close();
-
-        return check == 1;
-    }
 }

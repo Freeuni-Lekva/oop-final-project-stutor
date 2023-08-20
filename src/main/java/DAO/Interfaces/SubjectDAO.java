@@ -52,14 +52,4 @@ public interface SubjectDAO {
      * @param sub_id subject id.
      * @return true if successful.
      */
-    boolean addLearningSubject(int user_id, int sub_id) throws SQLException;
-
-    /**
-     * adds new teaching subject for the given user into the database.
-     * @param user_id teaching user.
-     * @param sub_id subject id.
-     * @return true if successful.
-     */
-    boolean addTeachingSubject(int user_id, int sub_id) throws SQLException;
-
 }

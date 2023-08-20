@@ -59,7 +59,6 @@ public class RegisterServlet extends HttpServlet {
             dispatcher.forward(req, resp);
             return;
         }
-
         req.setAttribute("usernameNotUnique", uniqueUsername);
         req.setAttribute("emailNotUnique", uniqueEmail);
         req.setAttribute("passwordsDontMatch", passCheck);
@@ -73,8 +72,8 @@ public class RegisterServlet extends HttpServlet {
     }
 
     private boolean uniqueUsername(String username, UserDAO userDAO) throws SQLException {
-        int tempId = userDAO.getUserId(username);
-        return tempId == -1;
+        User temp = userDAO.getUserByUsername(username);
+        return temp == null;
     }
 
     private static String getHash(String password) {

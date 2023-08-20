@@ -7,23 +7,16 @@ import Model.Subject;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SqlPostDAO implements PostDAO {
-
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "posts";
 
-    BasicDataSource dataSource;
 
     public SqlPostDAO() throws ClassNotFoundException {
-        dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/" + DBNAME);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
-        Class.forName("com.mysql.cj.jdbc.Driver");
+
     }
 
 
@@ -33,7 +26,7 @@ public class SqlPostDAO implements PostDAO {
 
         code.append("INSERT INTO " + TABLENAME + " (username, subject_name, type, text) VALUES (?, ?, ?, ? ); ");
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
 
         Statement st = connection.createStatement();
         st.execute("USE " + DBNAME + ";\n");
@@ -49,14 +42,14 @@ public class SqlPostDAO implements PostDAO {
         int check = statement.executeUpdate();
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return check == 1;
     }
 
     @Override
     public boolean removePost(int post_id) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -69,7 +62,7 @@ public class SqlPostDAO implements PostDAO {
         int check = statement.executeUpdate(sb.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return check == 1;
     }
@@ -78,7 +71,7 @@ public class SqlPostDAO implements PostDAO {
     public Post getPostById(int post_id) throws SQLException {
         Post res = null;
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -99,14 +92,14 @@ public class SqlPostDAO implements PostDAO {
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return res;
     }
 
     @Override
     public List<Post> getPostByUser(String username, POSTTYPE type) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -115,7 +108,7 @@ public class SqlPostDAO implements PostDAO {
 
         sb.append("select * from ").append(TABLENAME).append(" WHERE ");
         sb.append("username = '").append(username).append("'");
-        if (!type.toString().equals("both")) sb.append(" and type = '").append(type.toString()).append("'");
+        if (!type.toString().equals("all")) sb.append(" and type = '").append(type.toString()).append("'");
         sb.append(";");
 
         return getPosts(connection, statement, sb);
@@ -123,7 +116,7 @@ public class SqlPostDAO implements PostDAO {
 
     @Override
     public List<Post> getAllPosts(POSTTYPE type) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -131,28 +124,17 @@ public class SqlPostDAO implements PostDAO {
         StringBuilder sb = new StringBuilder();
 
         sb.append("select * from ").append(TABLENAME);
-        if (!type.toString().equals("both")) sb.append("where type = '").append(type.toString()).append("'");
+        if (!type.toString().equals("all")) sb.append(" where type = '").append(type.toString()).append("'");
+        sb.append(" order by post_id desc");
         sb.append(";");
 
         return getPosts(connection, statement, sb);
     }
 
-    public List<Post> getPosts() throws SQLException {
-        Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
-
-        statement.execute("USE " + DBNAME + ";\n");
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("select * from ").append(TABLENAME).append(" WHERE ");
-
-        return getPosts(connection, statement, sb);
-    }
 
     @Override
     public void clearPosts() throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         StringBuilder code = new StringBuilder();
@@ -164,11 +146,11 @@ public class SqlPostDAO implements PostDAO {
         statement.executeUpdate(code.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
     }
 
     private List<Post> getPosts(Connection connection, Statement statement, StringBuilder sb) throws SQLException {
-        List<Post> res = null;
+        List<Post> res = new ArrayList<>();
         ResultSet rs = statement.executeQuery(sb.toString());
 
         while (rs.next()) {
@@ -180,7 +162,7 @@ public class SqlPostDAO implements PostDAO {
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return res;
     }

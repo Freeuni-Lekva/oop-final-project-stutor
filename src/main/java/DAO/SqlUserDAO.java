@@ -10,24 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlUserDAO implements UserDAO {
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "Ikako2525";
     private final static String DBNAME = "stutor_db";
     private final static String TABLENAME = "users";
-    private BasicDataSource dataSource;
 
     public SqlUserDAO() throws ClassNotFoundException {
-        dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/" + DBNAME);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
-        Class.forName("com.mysql.cj.jdbc.Driver");
+
     }
 
 
     @Override
     public boolean addUser(User user) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -42,18 +35,23 @@ public class SqlUserDAO implements UserDAO {
         code.append("'" + user.getLastname() + "', ");
         code.append("'" + user.getEmail() + "')");
 
-        int check = statement.executeUpdate(code.toString());
+        try{
+            statement.executeUpdate(code.toString());
+        }catch (SQLException e){
+            return false;
+        }
+
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
-        return check == 1;
+        return true;
 
     }
 
     @Override
     public boolean removeUser(User user) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -66,16 +64,14 @@ public class SqlUserDAO implements UserDAO {
         int check = statement.executeUpdate(code.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
-        return check == 1;
+        return true;
     }
 
     @Override
     public User getUserByEmail(String email) throws SQLException {
-        User res = null;
-
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -85,26 +81,11 @@ public class SqlUserDAO implements UserDAO {
         code.append("select * from ").append(TABLENAME);
         code.append(" where email = '").append(email).append("';");
 
-        ResultSet rs = statement.executeQuery(code.toString());
-        while(rs.next()){
-            res = new User(rs.getString("username"), rs.getString("hashedpassword"),
-                    rs.getString("firstname"), rs.getString("lastname"),
-                    rs.getString("email"));
-            res.setUserId(rs.getInt("user_id"));
-        }
-
-
-        statement.close();
-        connection.close();
-
-        return res;
+        return getUser(connection, statement, code);
     }
 
-    @Override
-    public List<User> getUsersByUsername(String username) throws SQLException {
-        List<User> res = new ArrayList<>();
-
-        Connection connection = dataSource.getConnection();
+    public User getUserByUsername(String username) throws SQLException {
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
@@ -112,19 +93,9 @@ public class SqlUserDAO implements UserDAO {
         StringBuilder code = new StringBuilder();
 
         code.append("select * from ").append(TABLENAME);
-        code.append(" where username like '%").append(username).append("%'");
+        code.append(" where username = '").append(username).append("'");
 
-        ResultSet rs = statement.executeQuery(code.toString());
-        while(rs.next()){
-            res.add(new User(rs.getString("username"), rs.getString("hashedpassword"),
-                    rs.getString("firstname"), rs.getString("lastname"),
-                    rs.getString("email")));
-        }
-
-        statement.close();
-        connection.close();
-
-        return res;
+        return getUser(connection, statement, code);
     }
 
     @Override
@@ -141,7 +112,7 @@ public class SqlUserDAO implements UserDAO {
 
     @Override
     public boolean setPassword(String email, String newPassword) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         BCrypt.Hasher hasher = BCrypt.withDefaults();
@@ -161,19 +132,33 @@ public class SqlUserDAO implements UserDAO {
         int updated = statement.executeUpdate(code.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return updated == 1;
     }
 
     @Override
-    public List<User> getAllUsers() throws SQLException {
-        return getUsersByUsername("");
+    public List<User> searchUsersByUsername(String prefix) throws SQLException {
+        List<User> res = new ArrayList<>();
+
+        Connection connection = ConnectionPool.getConnection();
+        Statement statement = connection.createStatement();
+
+        statement.execute("USE " + DBNAME + ";\n");
+
+        StringBuilder code = new StringBuilder();
+
+        code.append("select * from ").append(TABLENAME).append(" where username like '");
+        code.append(prefix).append("%';");
+
+        ResultSet rs = statement.executeQuery(code.toString());
+
+        return getUsers(connection, statement, rs);
     }
 
     @Override
     public void clearUsers() throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         StringBuilder code = new StringBuilder();
@@ -185,30 +170,54 @@ public class SqlUserDAO implements UserDAO {
         statement.executeUpdate(code.toString());
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
     }
 
     @Override
-    public int getUserId(String username) throws SQLException {
-        int res = -1;
+    public List<User> getAllUsers() throws SQLException {
+        List<User> res = new ArrayList<>();
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
-
-        StringBuilder code = new StringBuilder();
 
         statement.execute("USE " + DBNAME + ";\n");
 
-        code.append("select user_id from users where username = '").append(username).append("';");
+        StringBuilder code = new StringBuilder();
+
+        code.append("select * from ").append(TABLENAME).append(";");
 
         ResultSet rs = statement.executeQuery(code.toString());
 
+        return getUsers(connection, statement, rs);
+    }
+
+    private User getUser(Connection connection, Statement statement, StringBuilder code) throws SQLException {
+        User res = null;
+        ResultSet rs = statement.executeQuery(code.toString());
         while(rs.next()){
-            res = rs.getInt("user_id");
+            res = new User(rs.getString("username"), rs.getString("hashedPassword"),
+                    rs.getString("firstname"), rs.getString("lastname"),
+                    rs.getString("email"));
+        }
+
+
+        statement.close();
+        ConnectionPool.releaseConnection(connection);
+
+        return res;
+    }
+
+    private List<User> getUsers(Connection connection, Statement statement, ResultSet rs) throws SQLException {
+        List<User> res = new ArrayList<>();
+        while(rs.next()){
+            User user = new User(rs.getString("username"), rs.getString("hashedPassword"),
+                    rs.getString("firstname"), rs.getString("lastname"),
+                    rs.getString("email"));
+            res.add(user);
         }
 
         statement.close();
-        connection.close();
+        ConnectionPool.releaseConnection(connection);
 
         return res;
     }
