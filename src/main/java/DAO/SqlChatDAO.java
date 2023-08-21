@@ -20,7 +20,7 @@ public class SqlChatDAO implements ChatDAO {
     public boolean sendMessage(Message message) throws SQLException {
         StringBuilder code = new StringBuilder();
 
-        code.append("INSERT INTO " + TABLENAME + " (sender_id, receiver_id, message) VALUES (?, ?, ? ); ");
+        code.append("INSERT INTO " + TABLENAME + " (sender, receiver, message) VALUES (?, ?, ? ); ");
 
         Connection connection = ConnectionPool.getConnection();
 
@@ -30,8 +30,8 @@ public class SqlChatDAO implements ChatDAO {
 
         PreparedStatement statement = connection.prepareStatement(code.toString());
 
-        statement.setInt(1, message.getSender());
-        statement.setInt(2, message.getReceiver());
+        statement.setString(1, message.getSender());
+        statement.setString(2, message.getReceiver());
         statement.setString(3, message.getMessage());
 
         int check = statement.executeUpdate();
@@ -43,11 +43,11 @@ public class SqlChatDAO implements ChatDAO {
     }
 
     @Override
-    public boolean deleteConversation(int first, int second) throws SQLException {
+    public boolean deleteConversation(String first, String second) throws SQLException {
         StringBuilder code = new StringBuilder();
 
         code.append("DELETE FROM ").append(TABLENAME).append(" WHERE ");
-        code.append("(sender_id = ? and receiver_id = ?) or (sender_id = ? and receiver_id = ?)\n");
+        code.append("(sender = ? and receiver = ?) or (sender = ? and receiver = ?)\n");
 
         Connection connection = ConnectionPool.getConnection();
 
@@ -57,10 +57,10 @@ public class SqlChatDAO implements ChatDAO {
 
         PreparedStatement statement = connection.prepareStatement(code.toString());
 
-        statement.setInt(1, first);
-        statement.setInt(2, second);
-        statement.setInt(3, second);
-        statement.setInt(4, first);
+        statement.setString(1, first);
+        statement.setString(2, second);
+        statement.setString(3, second);
+        statement.setString(4, first);
 
         int check = statement.executeUpdate();
 
@@ -71,12 +71,12 @@ public class SqlChatDAO implements ChatDAO {
     }
 
     @Override
-    public List<Integer> getUsers(int user_id) throws SQLException {
-        List<Integer> res = new ArrayList<>();
+    public List<String> getUsers(String user) throws SQLException {
+        List<String> res = new ArrayList<>();
         StringBuilder code = new StringBuilder();
 
         code.append("Select * FROM ").append(TABLENAME).append(" WHERE ");
-        code.append("sender_id = ? or receiver_id = ?\n");
+        code.append("sender = ? or receiver = ?\n");
         code.append("order by message_id desc;");
 
         Connection connection = ConnectionPool.getConnection();
@@ -87,16 +87,16 @@ public class SqlChatDAO implements ChatDAO {
 
         PreparedStatement statement = connection.prepareStatement(code.toString());
 
-        statement.setInt(1, user_id);
-        statement.setInt(2, user_id);
+        statement.setString(1, user);
+        statement.setString(2, user);
 
         ResultSet rs = statement.executeQuery();
 
         while(rs.next()){
-            int id1 = rs.getInt("sender_id");
-            int id2 = rs.getInt("receiver_id");
-            if(user_id != id1 && !res.contains(id1)) res.add(id1);
-            if(user_id != id2 && !res.contains(id2)) res.add(id2);
+            String user1 = rs.getString("sender");
+            String user2 = rs.getString("receiver");
+            if(!user.equals(user1) && !res.contains(user1)) res.add(user1);
+            if(!user.equals(user2) && !res.contains(user2)) res.add(user2);
         }
 
         statement.close();
@@ -105,12 +105,12 @@ public class SqlChatDAO implements ChatDAO {
     }
 
     @Override
-    public List<Message> getConversation(int first, int second) throws SQLException {
+    public List<Message> getConversation(String first, String second) throws SQLException {
         List<Message> res = new ArrayList<>();
         StringBuilder code = new StringBuilder();
 
         code.append("Select * FROM ").append(TABLENAME).append(" WHERE ");
-        code.append("(sender_id = ? and receiver_id = ?) or (sender_id = ? and receiver_id = ?)\n");
+        code.append("(sender = ? and receiver = ?) or (sender = ? and receiver = ?)\n");
         code.append("order by message_id desc;");
 
         Connection connection = ConnectionPool.getConnection();
@@ -121,15 +121,16 @@ public class SqlChatDAO implements ChatDAO {
 
         PreparedStatement statement = connection.prepareStatement(code.toString());
 
-        statement.setInt(1, first);
-        statement.setInt(2, second);
-        statement.setInt(3, second);
-        statement.setInt(4, first);
+        statement.setString(1, first);
+        statement.setString(2, second);
+        statement.setString(3, second);
+        statement.setString(4, first);
 
         ResultSet rs = statement.executeQuery();
 
         while(rs.next()){
-            res.add(new Message(rs.getInt("sender_id"), rs.getInt("receiver_id"), rs.getString("message")));
+            res.add(new Message(rs.getString("sender"),
+                    rs.getString("receiver"), rs.getString("message")));
             res.get(res.size() - 1).setMessage_id(rs.getInt("message_id"));
         }
 

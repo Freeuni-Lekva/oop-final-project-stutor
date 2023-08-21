@@ -2,21 +2,21 @@ package Model;
 
 public class Message {
     private int message_id;
-    private final int sender;
-    private final int receiver;
+    private final String sender;
+    private final String receiver;
     private final String message;
 
-    public Message(int sender, int receiver, String message){
+    public Message(String sender, String receiver, String message){
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
     }
 
-    public int getSender(){
+    public String getSender(){
         return this.sender;
     }
 
-    public int getReceiver(){
+    public String getReceiver(){
         return this.receiver;
     }
 
@@ -24,12 +24,18 @@ public class Message {
         return this.message;
     }
 
-
     public int getMessage_id() {
         return message_id;
     }
 
     public void setMessage_id(int message_id){
         this.message_id = message_id;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message msg = (Message) o;
+        return message_id == msg.message_id;
     }
 }

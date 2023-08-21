@@ -9,16 +9,16 @@ public interface UserDAO {
     /**
      * Adds the user into the database and returns true if the operation was successful.
      * @param user to be added
-     * @return false if some kind of error occurred or user could not be found. returns true otherwise.
+     * @return false if some kind of error occurred or user could not be added. returns true otherwise.
      */
     public boolean addUser(User user) throws SQLException;
 
     /**
      * removes the user from the database and returns true if the operation was successful.
-     * @param user to be removed
+     * @param username to be removed
      * @return false if some kind of error occurred or user could not be found. returns true otherwise.
      */
-    public boolean removeUser(User user) throws SQLException;
+    public boolean removeUser(String username) throws SQLException;
 
     /**
      * searches the user by his/her email.

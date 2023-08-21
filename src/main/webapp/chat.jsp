@@ -1,3 +1,10 @@
+<%@ page import="DAO.Interfaces.ChatDAO" %>
+<%@ page import="DAO.SqlChatDAO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="Model.Message" %>
+<%@ page import="DAO.Interfaces.AdminDAO" %>
+<%@ page import="DAO.SqlAdminDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,10 +33,24 @@
     </div>
   </div>
   <div>
+    <%
+      String user = (String) request.getSession().getAttribute("currSession");
+      AdminDAO admins = (SqlAdminDAO) request.getServletContext().getAttribute("admins");
+      try {
+        if(admins.isAdmin(user)){
+          String s = "<form action=\"/AdminServlet\" method=\"post\">\n" +
+                  "      <button type=\"submit\"><span>\n" +
+                  "      adminPanel\n" +
+                  "    </span></button>";
+          out.print(s);
+        }
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    %>
     <form action="/MyProfilePageServlet" method="post">
       <button type="submit"><span>
       <%
-        String user = (String) request.getSession().getAttribute("currSession");
         out.print(user);
       %>
     </span></button>
@@ -53,70 +74,69 @@
     <%--left area--%>
     <div>
       <div class="currentchats">
-        <div>
-          <p>Naruto</p>
-        </div>
-        <div>
-          <p>Sasuke</p>
-        </div>
-        <div>
-          <p>Sakura</p>
-        </div>
-        <div>
-          <p>Kakashi</p>
-        </div>
+        <%
+          String other = request.getParameter("toSend");
+          ChatDAO chat = (SqlChatDAO) request.getServletContext().getAttribute("chat");
+          List<String> users;
+          try {
+            users = chat.getUsers(user);
+          } catch (SQLException e) {
+            throw new RuntimeException(e);
+          }
+          if(!users.contains(other) && other != null) users.add(0, other);
+          for(String val : users){
+            String s = "<div><a href=\"chat.jsp?toSend="+ val +"\">" + val + "</a></div>";
+            out.print(s);
+          }
+        %>
       </div>
     </div>
 
     <%--chat area--%>
     <div>
       <div class="topbar">
-        <h3>Naruto</h3>
+        <h3><%
+          if(other!=null) out.print(other);
+        %></h3>
       </div>
 
       <div class="middlebar">
-        <div class="receivedmessage">
-          <p>Naruto</p>
-          <div class="receivedmessagetext">
-            <p>Hi Dvali, nice to meet you. I am naruto. I love watching animes. I also love reading books, espetially ones written by Ilia Chavchavadze. I love "Kacia Adamiani". So next time I am in Georgia, I would like you to take me to book store so that I can buy it.</p>
-          </div>
-        </div>
+        <%
+          List<Message> msgs;
+          try {
+            msgs = chat.getConversation(other, user);
+          } catch (SQLException e) {
+            throw new RuntimeException(e);
+          }
+          for(Message msg : msgs){
+            boolean check = msg.getReceiver().equals(user);
 
-        <div class="sentmessage">
-             <p>Dvali</p>
-             <div class="sentmessagetext">
-                <p>Hi Dvali, nice to meet you. I am naruto. I love watching animes. I also love reading books, espetially ones written by Ilia Chavchavadze. I love "Kacia Adamiani". So next time I am in Georgia, I would like you to take me to book store so that I can buy it.</p>
-             </div>
-        </div>
+            String type = "receivedmessage";
+            String textType = "receivedmessagetext";
+            String author = msg.getSender();
+            String message = msg.getMessage();
+            if(!check) {
+              type = "sentmessage";
+              textType = "sentmessagetext";
+            }
 
+            String s = "<div class=\""+ type + "\">\n" +
+                    "          <p>" + author + "</p>\n" +
+                    "          <div class=\"" + textType + "\">\n" +
+                    "            <p>" + message + "</p>\n" +
+                    "          </div>\n" +
+                    "        </div>";
 
-        <div class="receivedmessage">
-             <p>Naruto</p>
-             <div class="receivedmessagetext">
-                <p>Hi Dvali, nice to meet you. I am naruto. I love watching animes. I also love reading books, espetially ones written by Ilia Chavchavadze. I love "Kacia Adamiani". So next time I am in Georgia, I would like you to take me to book store so that I can buy it.</p>
-             </div>
-        </div>
-
-        <div class="receivedmessage">
-             <p>Naruto</p>
-             <div class="receivedmessagetext">
-                <p>Hi Dvali</p>
-             </div>
-        </div>
-
-        <div class="sentmessage">
-             <p>Dvali</p>
-             <div class="sentmessagetext">
-                <p>Hi Dvali</p>
-             </div>
-        </div>
-
+            out.print(s);
+          }
+        %>
       </div>
 
-      <div class="bottombar">
-        <input type="text" placeholder="Aa...">
-        <button class="sendbutton">SEND</button>
-      </div>
+      <form class="bottombar" action="/SendMessageServlet" method="post">
+        <input type="hidden" name="otherUser" value="<%= other %>">
+        <input type="text" placeholder="Aa..." id="textMessage" name="textMessage">
+        <button class="sendbutton" type="submit">SEND</button>
+      </form>
     </div>
   </div>
 

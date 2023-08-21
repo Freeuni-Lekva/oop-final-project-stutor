@@ -28,12 +28,6 @@ public interface SubjectDAO {
      */
     Subject getSubjectByName(String subjectName) throws SQLException;
 
-    /**
-     * gets the subject by id from the database.
-     * @param id of the subject.
-     * @return Subject object if successful.
-     */
-    Subject getSubjectById(int id) throws SQLException;
 
     /**
      * gets all the subjects from the database.

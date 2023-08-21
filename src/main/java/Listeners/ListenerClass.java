@@ -9,10 +9,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import DAO.*;
-import DAO.Interfaces.ChatDAO;
-import DAO.Interfaces.FollowerDAO;
-import DAO.Interfaces.PostDAO;
-import DAO.Interfaces.SubjectDAO;
+import DAO.Interfaces.*;
 
 import java.sql.SQLException;
 
@@ -39,18 +36,21 @@ public class ListenerClass implements ServletContextListener, HttpSessionListene
         ChatDAO chat;
         PostDAO posts;
         SubjectDAO subjects;
+        AdminDAO admins;
         try {
             users = new SqlUserDAO();
             followers = new SqlFollowerDAO();
             chat = new SqlChatDAO();
             posts = new SqlPostDAO();
             subjects = new SqlSubjectDAO();
+            admins = new SqlAdminDAO();
             ServletContext ctx = arg0.getServletContext();
             ctx.setAttribute("users", users);
             ctx.setAttribute("followers", followers);
-            ctx.setAttribute("chatdao", chat);
+            ctx.setAttribute("chat", chat);
             ctx.setAttribute("posts", posts);
             ctx.setAttribute("subjects", subjects);
+            ctx.setAttribute("admins", admins);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
