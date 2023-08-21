@@ -3,6 +3,7 @@ package DAO;
 import DAO.Interfaces.ChatDAO;
 import Model.Message;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.sql.SQLException;
@@ -10,58 +11,75 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SqlChatDAOTest extends TestCase {
-    private ChatDAO chat;
-    private List<String> msgs;
+    private static ChatDAO chatDAO;
+    private ConnectionPool connectionPool;
+
     @BeforeAll
     public void setUp() throws ClassNotFoundException, SQLException {
-        chat = new SqlChatDAO();
-        msgs = Arrays.asList("Naruto Magaria", "namdvilad", "kidev ici ra aris magari?",
-                "ra?", "bleach", "mogewona rukias bankai?", "sami");
-        chat.deleteChat();
+        chatDAO = new SqlChatDAO();
+        connectionPool = new ConnectionPool();
+        chatDAO.deleteChat();
     }
 
-    public void testConversation() throws SQLException {
-        Message msg1 = new Message(1, 2, msgs.get(0));
-        chat.sendMessage(msg1);
-        Message msg2 = new Message(2, 1, msgs.get(1));
-        chat.sendMessage(msg2);
-        Message msg3 = new Message(1, 2, msgs.get(2));
-        chat.sendMessage(msg3);
-        Message msg4 = new Message(2, 1, msgs.get(3));
-        chat.sendMessage(msg4);
-        Message msg5 = new Message(1, 2, msgs.get(4));
-        chat.sendMessage(msg5);
-        Message msg6 = new Message(2, 1, msgs.get(5));
-        chat.sendMessage(msg6);
-        Message msg7 = new Message(1, 3, msgs.get(6));
-        chat.sendMessage(msg7);
-        List<Message> conv = chat.getConversation(1, 2);
-        for(int i = 0; i <= conv.size() - 1; i++){
-            assertEquals(msgs.get(msgs.size() - 2 - i), conv.get(i).getMessage());
-        }
-        chat.deleteConversation(2, 1);
-        conv = chat.getConversation(1, 2);
-        assertEquals(0, conv.size());
+    @AfterEach
+    public void clearUp() throws SQLException {
+        chatDAO.deleteChat();
+    }
+
+    public void testSendMessage() throws SQLException {
+        Message msg1 = new Message("akali", "kayn", "You are pretty cool");
+        Message msg2 = new Message("kayn", "akali", "You As well");
+
+        assertTrue(chatDAO.sendMessage(msg1));
+        assertTrue(chatDAO.sendMessage(msg2));
     }
 
     public void testGetUsers() throws SQLException {
-        Message msg1 = new Message(1, 2, msgs.get(0));
-        chat.sendMessage(msg1);
-        Message msg2 = new Message(2, 3, msgs.get(1));
-        chat.sendMessage(msg2);
-        Message msg3 = new Message(3, 1, msgs.get(2));
-        chat.sendMessage(msg3);
-        Message msg4 = new Message(1, 9, msgs.get(3));
-        chat.sendMessage(msg4);
-        Message msg5 = new Message(9, 1, msgs.get(4));
-        chat.sendMessage(msg5);
-        Message msg6 = new Message(3, 2, msgs.get(5));
-        chat.sendMessage(msg6);
-        Message msg7 = new Message(1, 3, msgs.get(6));
-        chat.sendMessage(msg7);
-        List<Integer> users = chat.getUsers(1);
-        assertEquals((Integer) 3, users.get(0));
-        assertEquals((Integer) 9, users.get(1));
-        assertEquals((Integer) 2, users.get(2));
+        Message msg1 = new Message("akali", "kayn", "You are pretty cool");
+        Message msg2 = new Message("kayn", "akali", "You As well");
+        Message msg3 = new Message("kayn", "Zed", "master zed");
+
+        assertTrue(chatDAO.sendMessage(msg1));
+        assertTrue(chatDAO.sendMessage(msg2));
+        assertTrue(chatDAO.sendMessage(msg3));
+
+        List<String> users = chatDAO.getUsers("akali");
+        List<String> res = Arrays.asList("kayn");
+        assertEquals(res.size(), users.size());
+
+        for(String user : users){
+            assertTrue(res.contains(user));
+        }
+
+        users = chatDAO.getUsers("kayn");
+        res = Arrays.asList("akali", "Zed");
+        assertEquals(2, users.size());
+        for(String user : users){
+            assertTrue(res.contains(user));
+        }
+    }
+
+    public void testGetAndDeleteConversation() throws SQLException {
+        Message msg1 = new Message("akali", "kayn", "You are pretty cool");
+        Message msg2 = new Message("kayn", "akali", "You As well");
+        Message msg3 = new Message("kayn", "Zed", "master zed");
+
+        assertTrue(chatDAO.sendMessage(msg1));
+        assertTrue(chatDAO.sendMessage(msg2));
+        assertTrue(chatDAO.sendMessage(msg3));
+
+        List<Message> msgs = chatDAO.getConversation("akali", "kayn");
+        List<Message> res = Arrays.asList(msg2, msg1);
+        assertEquals(res.size(), msgs.size());
+
+        for(int i = 0; i < res.size(); i++){
+            assertEquals(res.get(i).getSender(), msgs.get(i).getSender());
+            assertEquals(res.get(i).getReceiver(), msgs.get(i).getReceiver());
+            assertEquals(res.get(i).getMessage(), msgs.get(i).getMessage());
+        }
+
+        chatDAO.deleteConversation("akali", "kayn");
+        msgs = chatDAO.getConversation("akali", "kayn");
+        assertEquals(0, msgs.size());
     }
 }

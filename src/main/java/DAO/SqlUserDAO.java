@@ -50,7 +50,7 @@ public class SqlUserDAO implements UserDAO {
     }
 
     @Override
-    public boolean removeUser(User user) throws SQLException {
+    public boolean removeUser(String username) throws SQLException {
         Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
@@ -59,7 +59,7 @@ public class SqlUserDAO implements UserDAO {
         StringBuilder code = new StringBuilder();
 
         code.append("DELETE FROM users WHERE ");
-        code.append("username = '").append(user.getUsername()).append("';");
+        code.append("username = '").append(username).append("';");
 
         int check = statement.executeUpdate(code.toString());
 

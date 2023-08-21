@@ -23,17 +23,17 @@ public class DeleteChatServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException{
         HttpSession session = req.getSession();
-        int current_user = (Integer) session.getAttribute("current_user_id");
+        String current_user = (String) session.getAttribute("current_user_id");
         SqlChatDAO chatDao = (SqlChatDAO) req.getServletContext().getAttribute("chatdao");
 
-        Integer chatDeleteID = Integer.valueOf(req.getParameter("chatDeleteID"));
+        String chatDeleteID = req.getParameter("chatDeleteID");
         try {
             chatDao.deleteConversation(current_user, chatDeleteID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        List<Integer> allMessageUsers = null;
+        List<String> allMessageUsers = null;
         try {
             allMessageUsers = chatDao.getUsers(current_user);
         } catch (SQLException e) {

@@ -32,7 +32,12 @@ public class SqlSubjectDAO implements SubjectDAO {
         sb.append("INSERT INTO ").append(SUBJECTS_TABLE).append(" (subject_name) VALUES (");
         sb.append("'").append(subject.getName()).append("');");
 
-        int check = statement.executeUpdate(sb.toString());
+        int check;
+        try{
+            check = statement.executeUpdate(sb.toString());
+        }catch (SQLException e){
+            return false;
+        }
 
         statement.close();
         ConnectionPool.releaseConnection(connection);
@@ -78,34 +83,6 @@ public class SqlSubjectDAO implements SubjectDAO {
 
         while(rs.next()) {
             res = new Subject(rs.getString("subject_name"));
-            res.setId(rs.getInt("sub_id"));
-        }
-
-        statement.close();
-        ConnectionPool.releaseConnection(connection);
-
-        return res;
-    }
-
-    @Override
-    public Subject getSubjectById(int id) throws SQLException {
-        Subject res = null;
-
-        Connection connection = ConnectionPool.getConnection();
-        Statement statement = connection.createStatement();
-
-        statement.execute("USE " + DBNAME + ";\n");
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("select * from ").append(SUBJECTS_TABLE);
-        sb.append(" where sub_id = ").append(id).append(";");
-
-        ResultSet rs = statement.executeQuery(sb.toString());
-
-        while(rs.next()) {
-            res = new Subject(rs.getString("subject_name"));
-            res.setId(rs.getInt("sub_id"));
         }
 
         statement.close();

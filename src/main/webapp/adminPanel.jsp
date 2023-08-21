@@ -1,4 +1,15 @@
-<%--
+<%@ page import="Model.User" %>
+<%@ page import="DAO.Interfaces.UserDAO" %>
+<%@ page import="DAO.SqlUserDAO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="Model.Subject" %>
+<%@ page import="DAO.Interfaces.SubjectDAO" %>
+<%@ page import="DAO.SqlSubjectDAO" %>
+<%@ page import="DAO.Interfaces.PostDAO" %>
+<%@ page import="DAO.SqlPostDAO" %>
+<%@ page import="Model.Post" %>
+<%@ page import="Model.POSTTYPE" %><%--
   Created by IntelliJ IDEA.
   User: ikako
   Date: 8/17/2023
@@ -19,66 +30,101 @@
   <div>
     <p>Users</p>
     <ul>
-      <li>PIRVELAD</li>
-      <li>IYO</li>
-      <li>SITYVA</li>
-      <li>PIRVELAD</li>
-      <li>IYO</li>
-      <li>SITYVA</li>
-      <li>PIRVELAD</li>
-      <li>IYO</li>
-      <li>SITYVA</li>
-      <li>PIRVELAD</li>
-      <li>IYO</li>
-      <li>SITYVA</li>
+      <%
+        UserDAO userDAO = (SqlUserDAO) request.getServletContext().getAttribute("users");
+        List<User> users;
+
+        try {
+          users = userDAO.getAllUsers();
+        } catch (SQLException e) {
+          throw new RuntimeException(e);
+        }
+
+        for(User user : users){
+          String s = "<li>" + user.getUsername() + "</li>";
+          out.print(s);
+        }
+      %>
     </ul>
   </div>
   <%--subjects--%>
   <div>
     <p>Subjects</p>
     <ul>
-      <li>PIRVELAD</li>
-      <li>IYO</li>
-      <li>SITYVA</li>
+      <%
+        SubjectDAO subjectDAO = (SqlSubjectDAO) request.getServletContext().getAttribute("subjects");
+        List<Subject> subjects;
+
+        try {
+          subjects = subjectDAO.getAllSubjects();
+        } catch (SQLException e) {
+          throw new RuntimeException(e);
+        }
+
+        for(Subject subject : subjects){
+          String s = "<li>" + subject.getName() + "</li>";
+          out.print(s);
+        }
+      %>
     </ul>
   </div>
   <%--posts--%>
   <div>
     <p>Posts</p>
-    <ul> </ul>
+    <ul>
+      <%
+        PostDAO postDAO = (SqlPostDAO) request.getServletContext().getAttribute("posts");
+        List<Post> posts;
+
+        try {
+          posts = postDAO.getAllPosts(POSTTYPE.toPostType("all"));
+        } catch (SQLException e) {
+          throw new RuntimeException(e);
+        }
+
+        for(Post post : posts){
+          String s = "<li>" + post.getId() + "</li>";
+          out.print(s);
+        }
+      %>
+    </ul>
   </div>
   <%--control--%>
   <div>
-    <input type="text" placeholder="Enter name...">
+    <input type="text" placeholder="Enter name..." name="adminText">
 
     <div>
 
       <div>
         <p>Users</p>
-        <button>
+        <button type="submit">
+          REMOVE
+        </button>
+      </div>
+
+      <div>
+        <p>Admins</p>
+        <button type="submit">
           ADD
         </button>
-        <button>
+        <button type="submit">
           REMOVE
         </button>
       </div>
 
       <div>
         <p>Subjects</p>
-        <button>
+        <button type="submit">
           ADD
         </button>
-        <button>
+        <button type="submit">
           REMOVE
         </button>
       </div>
 
       <div>
         <p>Posts</p>
-        <button>
-          ADD
-        </button>
-        <button>
+        <button type="submit">
           REMOVE
         </button>
       </div>

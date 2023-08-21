@@ -98,32 +98,6 @@
       </div>
     </form>
 
-    <script>
-      function validate() {
-        const subjectSelect = document.getElementById('subjectSelect');
-        const selectedSubject = subjectSelect.options[subjectSelect.selectedIndex].text;
-
-        const levelSelect = document.getElementById('levelSelect');
-        const selectedLevel = levelSelect.options[levelSelect.selectedIndex].text;
-
-        const postTextarea = document.getElementById('postTextarea');
-        const postContent = postTextarea.value.trim();
-
-        if (postContent === "") {
-          alert("Please enter post content.");
-          return false;
-        }
-
-        return true;
-      }
-
-      document.querySelector('.inputArea').addEventListener('submit', function(event) {
-        if (!validate()) {
-          event.preventDefault(); // Prevent form submission if validation fails
-        }
-      });
-    </script>
-
 
     <div class = "searchbottom">
       <div class = "results">
@@ -150,32 +124,13 @@
                     "                  </svg>\n" +
                     "                </div>\n" +
                     "              </div>\n" +
-                    "              <span>CHAT</span>\n" +
+                    "              <a href=\"/chat.jsp?toSend=" + post.getUsername() + "\">CHAT</a>\n" +
                     "            </button>\n" +
                     "          </div>\n" +
                     "        </div>";
             out.print(s);
           }
         %>
-        <div class = "searchitem">
-          <p>Lali Ezugbaia (69)</p>
-          <p>Qartuli ena da qartvelebi (aswavlis)</p>
-          <p>Me var lali, da maqvs tvali, gamabrazeb, vai sheni brali. chemi moswavlea dvali. da maqvs rbili dzvali. damemarta chvali. ar davtove kvali. kibo kibo kibo. ver momkla, 1-0. sanam cocxali var qartvelebis mwvalebeli var heheee. diax es me var. me movuge bolo astaxas. me movuge bolo bendus. me movuge bolo dvals.</p>
-
-          <div>
-            <button>
-              <div class="svg-wrapper-1">
-                <div class="svg-wrapper">
-                  <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z" fill="currentColor"></path>
-                  </svg>
-                </div>
-              </div>
-              <span>CHAT</span>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>

@@ -40,7 +40,7 @@ public class SqlUserDAOTest extends TestCase {
                 "khutsishvili", "ikhut21");
 
         assertTrue(userDAO.addUser(user));
-        assertTrue(userDAO.removeUser(user));
+        assertTrue(userDAO.removeUser(user.getUsername()));
     }
 
     public void testGetUserByEmail() throws SQLException {
@@ -49,7 +49,7 @@ public class SqlUserDAOTest extends TestCase {
 
         assertTrue(userDAO.addUser(user));
         assertEquals(user, userDAO.getUserByEmail("ikhut21"));
-        assertTrue(userDAO.removeUser(user));
+        assertTrue(userDAO.removeUser(user.getUsername()));
         assertNull(userDAO.getUserByEmail("ikhut21"));
     }
 
@@ -59,7 +59,7 @@ public class SqlUserDAOTest extends TestCase {
 
         assertTrue(userDAO.addUser(user));
         assertEquals(user, userDAO.getUserByUsername("SlowDancer"));
-        assertTrue(userDAO.removeUser(user));
+        assertTrue(userDAO.removeUser(user.getUsername()));
         assertNull(userDAO.getUserByEmail("ikhut21"));
     }
 

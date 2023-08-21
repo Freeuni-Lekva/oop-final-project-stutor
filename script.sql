@@ -12,6 +12,42 @@ CREATE TABLE users (
     email VARCHAR(64) UNIQUE
 );
 
+DROP TABLE IF EXISTS subjects;
+
+CREATE TABLE subjects (
+    subject_name VARCHAR(64) primary key
+);
+
+drop table if exists chat;
+
+create table chat (
+    message_id INT PRIMARY KEY AUTO_INCREMENT,
+    sender VARCHAR(64),
+    receiver VARCHAR(64),
+    message VARCHAR(255),
+    FOREIGN KEY (sender) REFERENCES users(username) ON DELETE CASCADE,
+    FOREIGN KEY (receiver) REFERENCES users(username) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS posts;
+
+CREATE TABLE posts (
+   post_id INT AUTO_INCREMENT PRIMARY KEY,
+   username VARCHAR(64),
+   subject_name VARCHAR(64),
+   type VARCHAR(64),
+   text TEXT,
+   FOREIGN KEY (subject_name) REFERENCES subjects(subject_name) ON DELETE CASCADE,
+   FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS admins;
+
+create table admins (
+    adminName varchar(64) primary key,
+    foreign key (adminName) references users(username) ON DELETE cascade
+);
+
 DROP TABLE IF EXISTS followers;
 
 CREATE TABLE followers (
@@ -26,30 +62,13 @@ CREATE TABLE followers (
 DROP TABLE IF EXISTS ratings;
 
 CREATE TABLE ratings (
-     user_id VARCHAR(64),
-     rated_id VARCHAR(64),
-     rating_value TINYINT UNSIGNED CHECK (rating_value BETWEEN 1 AND 5),
-     foreign key (user_id) references users(username) ON DELETE CASCADE,
-     foreign key (rated_id) references users(username) ON DELETE CASCADE,
-     CONSTRAINT unique_user_rated_pair UNIQUE (user_id, rated_id),
-     CONSTRAINT check_user_not_equal_rated CHECK (user_id <> rated_id)
-);
-
-drop table if exists chat;
-
-create table chat (
-    message_id INT PRIMARY KEY AUTO_INCREMENT,
-    sender_id INT,
-    receiver_id INT,
-    message VARCHAR(255)
-);
-
-
-DROP TABLE IF EXISTS subjects;
-
-CREATE TABLE subjects (
-    sub_id INT AUTO_INCREMENT primary key,
-    subject_name VARCHAR(64)
+    user_id VARCHAR(64),
+    rated_id VARCHAR(64),
+    rating_value TINYINT UNSIGNED CHECK (rating_value BETWEEN 1 AND 5),
+    foreign key (user_id) references users(username) ON DELETE CASCADE,
+    foreign key (rated_id) references users(username) ON DELETE CASCADE,
+    CONSTRAINT unique_user_rated_pair UNIQUE (user_id, rated_id),
+    CONSTRAINT check_user_not_equal_rated CHECK (user_id <> rated_id)
 );
 
 INSERT INTO subjects (subject_name) VALUES
@@ -73,51 +92,3 @@ INSERT INTO subjects (subject_name) VALUES
     ('Environmental Science'),
     ('Political Science'),
     ('Business Studies');
-
-select * from subjects;
-
-# DROP TABLE IF EXISTS tutor_subjects;
-
-# CREATE INDEX idx_column ON subjects (sub_id);
-
-
-DROP TABLE IF EXISTS teaching_subjects;
-
-CREATE TABLE teaching_subjects (
-    user_id VARCHAR(64),
-    sub_id INT,
-    foreign key (user_id) references users(username) ON DELETE CASCADE,
-    foreign key (sub_id) references subjects(sub_id) ON DELETE CASCADE
-);
-
-DROP TABLE IF EXISTS learning_subjects;
-
-CREATE TABLE learning_subjects (
-    user_id VARCHAR(64),
-    sub_id INT,
-    foreign key (user_id) references users(username) ON DELETE CASCADE,
-    foreign key (sub_id) references subjects(sub_id) ON DELETE CASCADE
-);
-
-select * from learning_subjects;
-
-select * from teaching_subjects;
-
-USE stutor_db;
-
-DROP TABLE IF EXISTS posts;
-
-CREATE TABLE posts (
-   post_id INT AUTO_INCREMENT PRIMARY KEY,
-   username VARCHAR(64),
-   subject_name VARCHAR(64),
-   type VARCHAR(64),
-   text TEXT,
-   FOREIGN KEY (subject_name) REFERENCES subjects(subject_name) ON DELETE CASCADE,
-   FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
-);
-
-
-
-
-

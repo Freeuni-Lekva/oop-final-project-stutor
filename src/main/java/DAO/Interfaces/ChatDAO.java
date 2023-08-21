@@ -15,26 +15,26 @@ public interface ChatDAO {
 
     /**
      * deletes conversation between two human beings.
-     * @param first id of the first one in conversation
-     * @param second id of the second one in conversation
+     * @param first username of the first one in conversation
+     * @param second username of the second one in conversation
      * @return null if some kind of error occurred. returns true otherwise.
      */
-    public boolean deleteConversation(int first, int second) throws SQLException;
+    public boolean deleteConversation(String first, String second) throws SQLException;
 
     /**
      * searches the users which had a conversation with user_id.
-     * @param user_id which users conversations we are looking at
+     * @param user which users conversations we are looking at
      * @return null if some kind of error occurred. returns users list otherwise.
      */
-    public List<Integer> getUsers(int user_id) throws SQLException;
+    public List<String> getUsers(String user) throws SQLException;
 
     /**
      * gets conversation between two human beings.
-     * @param first id of the first one in conversation
-     * @param second id of the second one in conversation
+     * @param first username of the first one in conversation
+     * @param second username of the second one in conversation
      * @return null if some kind of error occurred. returns list of messages otherwise.
      */
-    public List<Message> getConversation(int first, int second) throws SQLException;
+    public List<Message> getConversation(String first, String second) throws SQLException;
 
     /**
      * deletes chat.
