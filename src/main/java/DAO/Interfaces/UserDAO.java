@@ -41,13 +41,6 @@ public interface UserDAO {
      */
     public boolean isValidUser(String email, String password) throws SQLException;
 
-    /**
-     * changes users password.
-     * @param email of the user
-     * @param newPassword new password
-     * @return false if some kind of error occurred or user could not change the password. returns true otherwise.
-     */
-    public boolean setPassword(String email, String newPassword) throws SQLException;
 
     /**
      * searches users which have same prefix of the email

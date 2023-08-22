@@ -26,11 +26,11 @@ public class ChangePasswordServlet extends HttpServlet {
             } else {
                 User currUser = (User) req.getSession().getAttribute("currUser");
                 SqlUserDAO usersDAO = (SqlUserDAO) getServletContext().getAttribute("users");
-                try {
-                    usersDAO.setPassword(currUser.getEmail(), newPass);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    //usersDAO.setPassword(currUser.getEmail(), newPass);
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
                 resp.sendRedirect("change_pass.jsp");
             }
         } else {

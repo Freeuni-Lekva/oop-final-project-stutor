@@ -111,33 +111,6 @@ public class SqlUserDAO implements UserDAO {
     }
 
     @Override
-    public boolean setPassword(String email, String newPassword) throws SQLException {
-        Connection connection = ConnectionPool.getConnection();
-        Statement statement = connection.createStatement();
-
-        BCrypt.Hasher hasher = BCrypt.withDefaults();
-        char[] chars = new char[newPassword.length()];
-        for(int i = 0; i < newPassword.length(); i++ ){
-            chars[i] = newPassword.charAt(i);
-        }
-        String hashedPassword = hasher.hashToString(10, chars);
-
-        statement.execute("USE " + DBNAME + ";\n");
-
-        StringBuilder code = new StringBuilder();
-
-        code.append("update ").append(TABLENAME).append(" SET hashedpassword = '");
-        code.append(hashedPassword).append("' where email = '").append(email).append("';");
-
-        int updated = statement.executeUpdate(code.toString());
-
-        statement.close();
-        ConnectionPool.releaseConnection(connection);
-
-        return updated == 1;
-    }
-
-    @Override
     public List<User> searchUsersByUsername(String prefix) throws SQLException {
         List<User> res = new ArrayList<>();
 
