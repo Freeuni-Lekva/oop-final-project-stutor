@@ -91,42 +91,60 @@
   </div>
   <%--control--%>
   <div>
-    <input type="text" placeholder="Enter name..." name="adminText">
+    <input type="text" placeholder="Enter name..." name="admintext">
 
     <div>
 
       <div>
         <p>Users</p>
-        <button type="submit">
-          REMOVE
-        </button>
+        <form action="/RemoveUserServlet" method="post">
+          <input type="hidden" name="adminText" value="${param.admintext}">
+          <button type="submit">
+            REMOVE
+          </button>
+        </form>
       </div>
 
       <div>
         <p>Admins</p>
-        <button type="submit">
-          ADD
-        </button>
-        <button type="submit">
-          REMOVE
-        </button>
+        <form action="/AddAdminServlet" method="post">
+          <input type="hidden" name="adminText" value="${param.admintext}">
+          <button type="submit">
+            ADD
+          </button>
+        </form>
+        <form action="/RemoveAdminServlet" method="post">
+          <input type="hidden" name="adminText" value="${param.admintext}">
+          <button type="submit">
+            REMOVE
+          </button>
+        </form>
       </div>
 
       <div>
         <p>Subjects</p>
-        <button type="submit">
-          ADD
-        </button>
-        <button type="submit">
-          REMOVE
-        </button>
+        <form action="/AddSubjectServlet" method="post">
+          <input type="hidden" name="adminText" value="${param.admintext}">
+          <button type="submit">
+            ADD
+          </button>
+        </form>
+        <form action="/RemoveSubjectServlet" method="post">
+          <input type="hidden" name="adminText" value="${param.admintext}">
+          <button type="submit">
+            REMOVE
+          </button>
+        </form>
       </div>
 
       <div>
         <p>Posts</p>
-        <button type="submit">
-          REMOVE
-        </button>
+        <form action="/DeletePostServlet" method="post">
+          <input type="hidden" name="adminText" value="${param.admintext}">
+          <button type="submit">
+            REMOVE
+          </button>
+        </form>
       </div>
     </div>
   </div>
