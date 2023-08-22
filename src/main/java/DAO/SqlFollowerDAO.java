@@ -21,16 +21,16 @@ public class SqlFollowerDAO implements FollowerDAO {
     }
 
     @Override
-    public boolean addFollower(int user_id, int follower_id) throws SQLException {
+    public boolean addFollower(String following, String follower) throws SQLException {
         Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         statement.execute("USE " + DBNAME + ";\n");
 
         StringBuilder sb = new StringBuilder();
-        sb.append("INSERT INTO ").append(TABLENAME).append(" (user_id, follower_id) VALUES (");
-        sb.append("'").append(user_id).append("' ,");
-        sb.append("'").append(follower_id).append("');");
+        sb.append("INSERT INTO ").append(TABLENAME).append(" (following, follower) VALUES (");
+        sb.append("'").append(following).append("' ,");
+        sb.append("'").append(follower).append("');");
 
         int check = statement.executeUpdate(sb.toString());
 
@@ -41,7 +41,7 @@ public class SqlFollowerDAO implements FollowerDAO {
     }
 
     @Override
-    public boolean removeFollower(int user_id, int follower_id) throws SQLException {
+    public boolean removeFollower(String following, String follower) throws SQLException {
         Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
@@ -49,7 +49,7 @@ public class SqlFollowerDAO implements FollowerDAO {
 
         StringBuilder sb = new StringBuilder();
         sb.append("DELETE FROM ").append(TABLENAME).append(" WHERE ");
-        sb.append("user_id = ").append(user_id).append(" AND follower_id = ").append(follower_id).append(";");
+        sb.append("following = '").append(following).append("' AND follower = '").append(follower).append("';");
 
         int check = statement.executeUpdate(sb.toString());
 
@@ -60,15 +60,15 @@ public class SqlFollowerDAO implements FollowerDAO {
     }
 
     @Override
-    public List<User> getFollowers(int user_id) throws SQLException {
+    public List<User> getFollowers(String user) throws SQLException {
         List<User> followers = new ArrayList<>();
 
         Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT users.* FROM users JOIN ").append(TABLENAME).append(" AS f ON users.user_id = f.follower_id ");
-        sb.append(" WHERE f.user_id = ").append(user_id).append(";");
+        sb.append("SELECT users.* FROM users JOIN ").append(TABLENAME).append(" AS f ON users.username = f.follower ");
+        sb.append(" WHERE f.following = '").append(user).append("';");
 
         ResultSet rs = statement.executeQuery(sb.toString());
 
@@ -85,15 +85,15 @@ public class SqlFollowerDAO implements FollowerDAO {
     }
 
     @Override
-    public List<User> getFollowings(int user_id) throws SQLException {
+    public List<User> getFollowings(String user) throws SQLException {
         List<User> followings = new ArrayList<>();
 
         Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT users.* FROM users JOIN ").append(TABLENAME).append(" AS f ON users.user_id = f.user_id ");
-        sb.append(" WHERE f.follower_id = ").append(user_id).append(";");
+        sb.append("SELECT users.* FROM users JOIN ").append(TABLENAME).append(" AS f ON users.username = f.following ");
+        sb.append(" WHERE f.follower = '").append(user).append("';");
 
         ResultSet rs = statement.executeQuery(sb.toString());
 
@@ -107,5 +107,30 @@ public class SqlFollowerDAO implements FollowerDAO {
         ConnectionPool.releaseConnection(connection);
 
         return followings;
+    }
+
+    @Override
+    public boolean isFollowing(String follower, String following) throws SQLException {
+        boolean res = false;
+        Connection connection = ConnectionPool.getConnection();
+        Statement statement = connection.createStatement();
+
+        StringBuilder code = new StringBuilder();
+
+        statement.execute("USE " + DBNAME + ";\n");
+
+        code.append("select * from followers where follower = '");
+        code.append(follower).append("' and following = '").append(following);
+        code.append("';");
+
+        ResultSet rs = statement.executeQuery(code.toString());
+        while(rs.next()){
+            res = true;
+        }
+
+        statement.close();
+        ConnectionPool.releaseConnection(connection);
+
+        return res;
     }
 }

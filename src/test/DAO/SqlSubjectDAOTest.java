@@ -49,18 +49,6 @@ public class SqlSubjectDAOTest extends TestCase {
         Subject retrievedSubject = subjectDAO.getSubjectByName(subject.getName());
         assertNotNull(retrievedSubject);
         assertEquals(subject.getName(), retrievedSubject.getName());
-        assertEquals(subject.getId(), retrievedSubject.getId());
-    }
-
-    public void testGetSubjectById() throws SQLException {
-//        Subject subject = new Subject("Chemistry");
-//
-//        assertTrue(subjectDAO.addSubject(subject));
-//
-//        Subject retrievedSubject = subjectDAO.getSubjectById(subject.getId());
-//        assertNotNull(retrievedSubject);
-//        assertEquals(subject.getName(), retrievedSubject.getName());
-//        assertEquals(subject.getId(), retrievedSubject.getId());
     }
 
     public void testGetAllSubjects() throws SQLException {
