@@ -1,3 +1,5 @@
+CREATE DATABASE stutor_db;
+
 USE stutor_db;
 
 DROP TABLE IF EXISTS users;

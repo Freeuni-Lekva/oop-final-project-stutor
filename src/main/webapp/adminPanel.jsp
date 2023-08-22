@@ -9,7 +9,9 @@
 <%@ page import="DAO.Interfaces.PostDAO" %>
 <%@ page import="DAO.SqlPostDAO" %>
 <%@ page import="Model.Post" %>
-<%@ page import="Model.POSTTYPE" %><%--
+<%@ page import="Model.POSTTYPE" %>
+<%@ page import="DAO.Interfaces.AdminDAO" %>
+<%@ page import="DAO.SqlAdminDAO" %><%--
   Created by IntelliJ IDEA.
   User: ikako
   Date: 8/17/2023
@@ -20,10 +22,14 @@
 <html>
 <head>
   <title>adminPanel</title>
-  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/adminS.css">
 
 </head>
 <body>
+
+<div class="back">
+  <a href="feed.jsp">Go Back To Feed</a>
+</div>
 
 <section>
   <%--users--%>
@@ -83,72 +89,86 @@
         }
 
         for(Post post : posts){
-          String s = "<li>" + post.getId() + "</li>";
+          String s = "<li><a href=\"search.jsp?post_id="
+                  + post.getId() + "\">" + post.getId()
+                  + "</a></li>";
           out.print(s);
         }
       %>
     </ul>
   </div>
+    <div>
+      <p>Admins</p>
+      <ul>
+        <%
+          AdminDAO adminDAO = (SqlAdminDAO) request.getServletContext().getAttribute("admins");
+          List<String> admins;
+
+          try {
+            admins = adminDAO.getAllAdmins();
+          } catch (SQLException e) {
+            throw new RuntimeException(e);
+          }
+
+          for(String admin : admins){
+            String s = "<li>" + admin + "</li>";
+            out.print(s);
+          }
+        %>
+      </ul>
+    </div>
   <%--control--%>
-  <div>
-    <input type="text" placeholder="Enter name..." name="admintext">
+  <form class="control" method="post">
+    <input type="text" placeholder="Enter name..." name="adminText" id="adminText">
 
     <div>
-
       <div>
         <p>Users</p>
-        <form action="/RemoveUserServlet" method="post">
-          <input type="hidden" name="adminText" value="${param.admintext}">
-          <button type="submit">
+          <div>
+          <button type="submit" formaction="/RemoveUserServlet">
             REMOVE
           </button>
-        </form>
+          </div>
       </div>
 
       <div>
         <p>Admins</p>
-        <form action="/AddAdminServlet" method="post">
-          <input type="hidden" name="adminText" value="${param.admintext}">
-          <button type="submit">
+        <div>
+          <button type="submit" formaction="/AddAdminServlet">
             ADD
           </button>
-        </form>
-        <form action="/RemoveAdminServlet" method="post">
-          <input type="hidden" name="adminText" value="${param.admintext}">
-          <button type="submit">
+          <button type="submit" formaction="/RemoveAdminServlet">
             REMOVE
           </button>
-        </form>
+        </div>
       </div>
 
       <div>
         <p>Subjects</p>
-        <form action="/AddSubjectServlet" method="post">
-          <input type="hidden" name="adminText" value="${param.admintext}">
-          <button type="submit">
+          <div>
+          <button type="submit" formaction="/AddSubjectServlet">
             ADD
           </button>
-        </form>
-        <form action="/RemoveSubjectServlet" method="post">
-          <input type="hidden" name="adminText" value="${param.admintext}">
-          <button type="submit">
+          <button type="submit" formaction="/RemoveSubjectServlet">
             REMOVE
           </button>
-        </form>
+          </div>
       </div>
 
       <div>
         <p>Posts</p>
-        <form action="/DeletePostServlet" method="post">
-          <input type="hidden" name="adminText" value="${param.admintext}">
-          <button type="submit">
+        <div>
+          <button type="submit" formaction="/DeletePostServlet">
             REMOVE
           </button>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 
+<script>
+
+</script>
 </section>
 
 </body>

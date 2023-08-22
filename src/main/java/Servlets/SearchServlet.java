@@ -35,6 +35,7 @@ public class SearchServlet extends HttpServlet {
 
         String selectedSubject = req.getParameter("subjectSelect");
         String searchedUser = req.getParameter("userSearch");
+        String selectedType = req.getParameter("levelSelect");
 
         List<User> users;
         try{
@@ -46,13 +47,13 @@ public class SearchServlet extends HttpServlet {
         List<Post> posts = new ArrayList<>();
         try {
             for(User user : users){
-                posts.addAll(postDAO.getPostByUser(user.getUsername(), POSTTYPE.toPostType("all")));
+                posts.addAll(postDAO.getPostByUser(user.getUsername(), POSTTYPE.toPostType(selectedType)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        posts = posts.stream().filter(x -> x.getSubject().equals(selectedSubject)).toList();
+        if(!selectedSubject.equals("Any subject")) posts = posts.stream().filter(x -> x.getSubject().equals(selectedSubject)).toList();
 
 //        Collections.sort(posts);
 

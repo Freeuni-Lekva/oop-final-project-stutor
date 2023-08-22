@@ -22,7 +22,7 @@ public class AddSubjectServlet extends HttpServlet {
         String subjectName = req.getParameter("adminText");
 
         try {
-            subjectDAO.addSubject(new Subject(subjectName));
+            if(!subjectName.equals("")) subjectDAO.addSubject(new Subject(subjectName));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

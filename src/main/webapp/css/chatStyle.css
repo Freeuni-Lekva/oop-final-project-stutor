@@ -96,7 +96,10 @@ section {
     cursor: pointer;
 }
 
-
+.currentchats > div > a{
+    text-decoration: none;
+    color: inherit;
+}
 
 
 
@@ -115,6 +118,8 @@ section {
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding-right: 30px;
 }
 
 .topbar > h3 {
@@ -210,4 +215,27 @@ section {
 
     max-width: 410px;
     min-width: 100px;
+}
+
+section > section:first-of-type, section > section:last-of-type{
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+section > section:first-of-type > div, section > section:last-of-type > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    border-radius: 15px;
+    background-color: grey;
+    color: white;
+    text-align: center;
+}
+
+section > section:first-of-type > div > p:first-of-type, section > section:last-of-type > div > p:first-of-type{
+    margin-bottom: 20px;
 }
