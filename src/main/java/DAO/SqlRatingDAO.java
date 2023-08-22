@@ -17,7 +17,7 @@ public class SqlRatingDAO implements RatingDAO {
     }
 
     @Override
-    public boolean addRating(int user_id, int rated_id, int rating) throws SQLException {
+    public boolean addRating(String user, String rated, int rating) throws SQLException {
 
         Connection connection = ConnectionPool.getConnection();
         Statement statement = connection.createStatement();
@@ -27,10 +27,10 @@ public class SqlRatingDAO implements RatingDAO {
         StringBuilder sb = new StringBuilder();
 
         sb.append("INSERT INTO ").append(TABLENAME);
-        sb.append(" (user_id, rated_id, rating_value) VALUES (");
-        sb.append(user_id).append(" ,");
-        sb.append(rated_id).append(" ,");
-        sb.append(rating).append(");");
+        sb.append(" (user, rated, rating_value) VALUES ('");
+        sb.append(user).append("' ,'");
+        sb.append(rated).append("' ,'");
+        sb.append(rating).append("');");
 
         int check = statement.executeUpdate(sb.toString());
         statement.close();
@@ -40,7 +40,7 @@ public class SqlRatingDAO implements RatingDAO {
     }
 
     @Override
-    public double getRating(int user_id) throws SQLException {
+    public double getRating(String user) throws SQLException {
         int count = 0;
         int sum = 0;
 
@@ -49,7 +49,7 @@ public class SqlRatingDAO implements RatingDAO {
 
         StringBuilder sb = new StringBuilder("SELECT * FROM ");
         sb.append(TABLENAME);
-        sb.append(" WHERE rated_id = ").append(user_id).append(";");
+        sb.append(" WHERE rated = '").append(user).append("';");
 
         ResultSet rs = statement.executeQuery(sb.toString());
 

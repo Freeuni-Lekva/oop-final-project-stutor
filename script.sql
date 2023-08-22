@@ -48,27 +48,27 @@ create table admins (
     foreign key (adminName) references users(username) ON DELETE cascade
 );
 
-DROP TABLE IF EXISTS followers;
-
-CREATE TABLE followers (
-    user_id VARCHAR(64),
-    follower_id VARCHAR(64),
-    foreign key (user_id) references users(username) ON DELETE CASCADE,
-    foreign key (follower_id) references users(username) ON DELETE CASCADE,
-    CONSTRAINT check_user_not_equal_friend CHECK (user_id <> follower_id),
-    CONSTRAINT unique_user_friend_pair UNIQUE (user_id, follower_id)
-);
-
 DROP TABLE IF EXISTS ratings;
 
 CREATE TABLE ratings (
-    user_id VARCHAR(64),
-    rated_id VARCHAR(64),
+    user VARCHAR(64),
+    rated VARCHAR(64),
     rating_value TINYINT UNSIGNED CHECK (rating_value BETWEEN 1 AND 5),
-    foreign key (user_id) references users(username) ON DELETE CASCADE,
-    foreign key (rated_id) references users(username) ON DELETE CASCADE,
-    CONSTRAINT unique_user_rated_pair UNIQUE (user_id, rated_id),
-    CONSTRAINT check_user_not_equal_rated CHECK (user_id <> rated_id)
+    foreign key (user) references users(username) ON DELETE CASCADE,
+    foreign key (rated) references users(username) ON DELETE CASCADE,
+    CONSTRAINT unique_user_rated_pair UNIQUE (user, rated),
+    CONSTRAINT check_user_not_equal_rated CHECK (user <> rated)
+);
+
+DROP TABLE IF EXISTS followers;
+
+CREATE TABLE followers (
+    following VARCHAR(64),
+    follower VARCHAR(64),
+    foreign key (following) references users(username) ON DELETE CASCADE,
+    foreign key (follower) references users(username) ON DELETE CASCADE,
+    CONSTRAINT check_user_not_equal_friend CHECK (following <> follower),
+    CONSTRAINT unique_user_friend_pair UNIQUE (following, follower)
 );
 
 INSERT INTO subjects (subject_name) VALUES

@@ -22,7 +22,7 @@ public class FeedServlet extends HttpServlet {
         if (session.getAttribute("current_user_id") == null) {
             resp.sendRedirect("homepage.jsp");
         } else {
-            int currentUser = (Integer) session.getAttribute("current_user_id");
+            String currentUser = (String) session.getAttribute("currSession");
             SqlFollowerDAO followerDAO = (SqlFollowerDAO) getServletContext().getAttribute("followers");
             List<User> followings = null;
             try {
