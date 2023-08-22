@@ -95,6 +95,7 @@ public class SqlChatDAO implements ChatDAO {
         while(rs.next()){
             String user1 = rs.getString("sender");
             String user2 = rs.getString("receiver");
+            if(user1.equals(user2) && !res.contains(user1)) res.add(user1);
             if(!user.equals(user1) && !res.contains(user1)) res.add(user1);
             if(!user.equals(user2) && !res.contains(user2)) res.add(user2);
         }

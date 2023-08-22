@@ -109,15 +109,15 @@
             throw new RuntimeException(e);
           }
           for(Message msg : msgs){
-            boolean check = msg.getReceiver().equals(user);
+            boolean check = msg.getSender().equals(user);
 
-            String type = "receivedmessage";
-            String textType = "receivedmessagetext";
+            String type = "sentmessage";
+            String textType = "sentmessagetext";
             String author = msg.getSender();
             String message = msg.getMessage();
             if(!check) {
-              type = "sentmessage";
-              textType = "sentmessagetext";
+              type = "receivedmessage";
+              textType = "receivedmessagetext";
             }
 
             String s = "<div class=\""+ type + "\">\n" +

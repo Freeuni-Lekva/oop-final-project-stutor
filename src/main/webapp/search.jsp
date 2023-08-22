@@ -7,6 +7,8 @@
 <%@ page import="DAO.Interfaces.PostDAO" %>
 <%@ page import="Model.POSTTYPE" %>
 <%@ page import="DAO.SqlPostDAO" %>
+<%@ page import="DAO.Interfaces.AdminDAO" %>
+<%@ page import="DAO.SqlAdminDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,10 +38,24 @@
         </div>
     </div>
     <div>
+        <%
+            String user = (String) request.getSession().getAttribute("currSession");
+            AdminDAO admins = (SqlAdminDAO) request.getServletContext().getAttribute("admins");
+            try {
+                if(admins.isAdmin(user)){
+                    String s = "<form action=\"/AdminServlet\" method=\"post\">\n" +
+                            "      <button type=\"submit\"><span>\n" +
+                            "      adminPanel\n" +
+                            "    </span></button>";
+                    out.print(s);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        %>
     <form action="/MyProfilePageServlet" method="post">
       <button type="submit"><span>
       <%
-        String user = (String) request.getSession().getAttribute("currSession");
         out.print(user);
       %>
     </span></button>
