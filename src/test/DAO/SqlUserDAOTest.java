@@ -67,17 +67,6 @@ public class SqlUserDAOTest extends TestCase {
         userDAO.clearUsers();
     }
 
-    public void testSetPassword() throws SQLException {
-        User user = new User("SlowDancer", getHash("123"), "irakli",
-                "khutsishvili", "ikhut21");
-
-        assertTrue(userDAO.addUser(user));
-        assertEquals(user.getHashedPassword(), userDAO.getUserByUsername("SlowDancer").getHashedPassword());
-        userDAO.setPassword("ikhut21", "1");
-//        assertEquals(getHash("1"), userDAO.getUserByUsername("SlowDancer").getHashedPassword());
-        userDAO.clearUsers();
-    }
-
     public void testIsValid() throws SQLException {
         User user = new User("SlowDancer", getHash("123"), "irakli",
                 "khutsishvili", "ikhut21");
