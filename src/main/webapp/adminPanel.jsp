@@ -27,6 +27,18 @@
 </head>
 <body>
 
+<%
+  String username = (String) request.getSession().getAttribute("currSession");
+  UserDAO userDAO = (SqlUserDAO) request.getServletContext().getAttribute("users");
+  try {
+    if (username == null || userDAO.getUserByUsername(username) == null) {
+      response.sendRedirect("/homepage.jsp");
+    }
+  } catch (SQLException e) {
+    throw new RuntimeException(e);
+  }
+%>
+
 <div class="back">
   <a href="feed.jsp">Go Back To Feed</a>
 </div>
@@ -37,7 +49,6 @@
     <p>Users</p>
     <ul>
       <%
-        UserDAO userDAO = (SqlUserDAO) request.getServletContext().getAttribute("users");
         List<User> users;
 
         try {
@@ -68,6 +79,7 @@
         }
 
         for(Subject subject : subjects){
+          if(subject.equals(new Subject("Any subject"))) continue;
           String s = "<li>" + subject.getName() + "</li>";
           out.print(s);
         }

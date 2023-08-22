@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ConnectionPool {
         private static List<Connection> connectionPool;
-        private static int INITIAL_POOL_SIZE = 5;
+        private static int INITIAL_POOL_SIZE = 8;
         private final static String USERNAME = "root";
         private final static String PASSWORD = "Ikako2525";
         private final static String DBNAME = "stutor_db";
