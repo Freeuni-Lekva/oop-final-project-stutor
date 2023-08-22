@@ -14,7 +14,7 @@ Welcome to the Stutor Platform! This web application is designed to facilitate k
 - Tomcat 9.0.76
 - JDK 19+
 - Microsoft MySql Server.
-  For more information see [pom.xml](https://github.com/Freeuni-Lekva/oop-final-project-stutor/blob/master/pom.xml)
+For more information see [pom.xml](https://github.com/Freeuni-Lekva/oop-final-project-stutor/blob/master/pom.xml)
 
 ## Compile And Run
 - Compile sql script first. (to fill table compile fill.sql file as well).
