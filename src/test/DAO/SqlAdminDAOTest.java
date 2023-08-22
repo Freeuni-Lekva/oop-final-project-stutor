@@ -42,6 +42,9 @@ public class SqlAdminDAOTest extends TestCase {
         assertTrue(adminDAO.addAdmin(user1.getUsername()));
         assertTrue(adminDAO.addAdmin(user2.getUsername()));
         assertFalse(adminDAO.addAdmin(user1.getUsername()));
+
+        adminDAO.clearAdmins();
+        userDAO.clearUsers();
     }
 
     public void testIsAdmin() throws SQLException {
@@ -58,6 +61,8 @@ public class SqlAdminDAOTest extends TestCase {
 
         assertTrue(adminDAO.addAdmin(user1.getUsername()));
         assertTrue(adminDAO.isAdmin(user1.getUsername()));
+        adminDAO.clearAdmins();
+        userDAO.clearUsers();
     }
 
     public void testGetAllAdmins() throws SQLException {
@@ -78,6 +83,8 @@ public class SqlAdminDAOTest extends TestCase {
         for(String val : admins){
             assertTrue(res.contains(val));
         }
+        adminDAO.clearAdmins();
+        userDAO.clearUsers();
     }
 
     public void testRemoveAdmin() throws SQLException {
@@ -99,5 +106,7 @@ public class SqlAdminDAOTest extends TestCase {
         assertEquals(1, admins.size());
 
         assertEquals("ruska", admins.get(0));
+        adminDAO.clearAdmins();
+        userDAO.clearUsers();
     }
 }

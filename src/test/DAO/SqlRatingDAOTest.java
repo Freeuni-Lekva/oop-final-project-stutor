@@ -43,6 +43,7 @@ class SqlRatingDAOTest {
 
         boolean check = ratingDAO.addRating(userDAO.getUserByEmail("johndoe2@example.com").getUsername(), userDAO.getUserByEmail("johndoe1@example.com").getUsername(), 5);
         assertEquals(true, check);
+        userDAO.clearUsers();
     }
 
     @Test
@@ -70,7 +71,7 @@ class SqlRatingDAOTest {
         assertEquals(ratingDAO.getRating(userDAO.getUserByEmail("johndoe2@example.com").getUsername()), (double) 5 / 2, 0);
         assertEquals(ratingDAO.getRating(userDAO.getUserByEmail("johndoe3@example.com").getUsername()), (double) 3, 0);
         assertEquals(ratingDAO.getRating(userDAO.getUserByEmail("johndoe4@example.com").getUsername()), (double) 0, 0);
-
+        userDAO.clearUsers();
     }
 
 }

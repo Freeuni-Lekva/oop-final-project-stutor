@@ -33,6 +33,7 @@ public class SqlUserDAOTest extends TestCase {
 
         assertTrue(userDAO.addUser(user));
         assertFalse(userDAO.addUser(user));
+        userDAO.clearUsers();
     }
 
     public void testRemove() throws SQLException {
@@ -41,6 +42,7 @@ public class SqlUserDAOTest extends TestCase {
 
         assertTrue(userDAO.addUser(user));
         assertTrue(userDAO.removeUser(user.getUsername()));
+        userDAO.clearUsers();
     }
 
     public void testGetUserByEmail() throws SQLException {
@@ -51,6 +53,7 @@ public class SqlUserDAOTest extends TestCase {
         assertEquals(user, userDAO.getUserByEmail("ikhut21"));
         assertTrue(userDAO.removeUser(user.getUsername()));
         assertNull(userDAO.getUserByEmail("ikhut21"));
+        userDAO.clearUsers();
     }
 
     public void testGetUserByUsername() throws SQLException {
@@ -61,6 +64,7 @@ public class SqlUserDAOTest extends TestCase {
         assertEquals(user, userDAO.getUserByUsername("SlowDancer"));
         assertTrue(userDAO.removeUser(user.getUsername()));
         assertNull(userDAO.getUserByEmail("ikhut21"));
+        userDAO.clearUsers();
     }
 
     public void testSetPassword() throws SQLException {
@@ -70,7 +74,8 @@ public class SqlUserDAOTest extends TestCase {
         assertTrue(userDAO.addUser(user));
         assertEquals(user.getHashedPassword(), userDAO.getUserByUsername("SlowDancer").getHashedPassword());
         userDAO.setPassword("ikhut21", "1");
-        //assertEquals(getHash("1"), userDAO.getUserByUsername("SlowDancer").getHashedPassword());
+//        assertEquals(getHash("1"), userDAO.getUserByUsername("SlowDancer").getHashedPassword());
+        userDAO.clearUsers();
     }
 
     public void testIsValid() throws SQLException {
@@ -79,6 +84,7 @@ public class SqlUserDAOTest extends TestCase {
 
         assertTrue(userDAO.addUser(user));
         assertTrue(userDAO.isValidUser("ikhut21", "123"));
+        userDAO.clearUsers();
     }
 
     public void testSearchUserByUsername() throws SQLException {
@@ -108,6 +114,7 @@ public class SqlUserDAOTest extends TestCase {
         for(int i = 0; i < res.size(); i++){
             assertTrue(res.contains(toCheck.get(i)));
         }
+        userDAO.clearUsers();
     }
 
     public void testGetAllUsers() throws SQLException {
@@ -140,6 +147,7 @@ public class SqlUserDAOTest extends TestCase {
         for(int i = 0; i < res.size(); i++){
             assertTrue(res.contains(toCheck.get(i)));
         }
+        userDAO.clearUsers();
     }
 
     private static String getHash(String password) {

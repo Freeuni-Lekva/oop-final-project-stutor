@@ -39,6 +39,7 @@ public class SqlSubjectDAOTest extends TestCase {
 
         assertTrue(subjectDAO.removeSubject(subject.getName()));
         assertFalse(subjectDAO.removeSubject(subject.getName())); // Removing a non-existent subject should fail
+        subjectDAO.clearSubjects();
     }
 
     public void testGetSubjectByName() throws SQLException {
@@ -49,6 +50,7 @@ public class SqlSubjectDAOTest extends TestCase {
         Subject retrievedSubject = subjectDAO.getSubjectByName(subject.getName());
         assertNotNull(retrievedSubject);
         assertEquals(subject.getName(), retrievedSubject.getName());
+        subjectDAO.clearSubjects();
     }
 
     public void testGetAllSubjects() throws SQLException {
@@ -63,5 +65,6 @@ public class SqlSubjectDAOTest extends TestCase {
 
         assertTrue(subjects.contains(subject1));
         assertTrue(subjects.contains(subject2));
+        subjectDAO.clearSubjects();
     }
 }

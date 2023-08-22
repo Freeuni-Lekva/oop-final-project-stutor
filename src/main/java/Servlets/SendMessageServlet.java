@@ -32,7 +32,7 @@ public class SendMessageServlet extends HttpServlet {
         Message msg = new Message(sender, receiver, message);
 
         try {
-            chat.sendMessage(msg);
+            if(!message.equals("")) chat.sendMessage(msg);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

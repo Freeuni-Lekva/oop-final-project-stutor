@@ -46,6 +46,7 @@ class SqlFollowerDAOTest {
         check = followerDAO.addFollower(userDAO.getUserByEmail("johndoe1@example.com").getUsername(), userDAO.getUserByEmail("johndoe3@example.com").getUsername());
         assertEquals(check, true);
 
+        userDAO.clearUsers();
     }
 
     @Test
@@ -67,7 +68,7 @@ class SqlFollowerDAOTest {
         assertEquals(check, true);
         check = followerDAO.removeFollower(userDAO.getUserByEmail("johndoe1@example.com").getUsername(), userDAO.getUserByEmail("johndoe2@example.com").getUsername());
         assertEquals(check, false);
-
+        userDAO.clearUsers();
     }
 
     @Test
@@ -97,11 +98,29 @@ class SqlFollowerDAOTest {
         assertEquals(list.size(), 1);
 
         assertEquals(list.get(0).getUsername(), "testUser1");
+        userDAO.clearUsers();
     }
 
     @Test
-    public void getFollowings(){
+    public void getFollowings() throws SQLException {
+        User newUser = new User("testUser1", "hashedPass", "John", "Doe", "johndoe1@example.com");
+        User newUser1 = new User("testUser2", "hashedPass", "John", "Doe", "johndoe2@example.com");
+        User newUser2 = new User("testUser3", "hashedPass", "John", "Doe", "johndoe3@example.com");
 
+        userDAO.addUser(newUser);
+        userDAO.addUser(newUser1);
+        userDAO.addUser(newUser2);
+
+        followerDAO.addFollower(userDAO.getUserByEmail("johndoe1@example.com").getUsername(), userDAO.getUserByEmail("johndoe2@example.com").getUsername());
+        followerDAO.addFollower(userDAO.getUserByEmail("johndoe1@example.com").getUsername(), userDAO.getUserByEmail("johndoe3@example.com").getUsername());
+
+        List<User> list = followerDAO.getFollowings(userDAO.getUserByEmail("johndoe2@example.com").getUsername());
+
+        assertEquals(list.size(), 1);
+
+        assertEquals(list.get(0).getUsername(), "testUser1");
+
+        userDAO.clearUsers();
     }
 
     @Test
@@ -121,6 +140,7 @@ class SqlFollowerDAOTest {
 
         assertTrue(followerDAO.isFollowing(user2.getUsername(), user1.getUsername()));
         assertFalse(followerDAO.isFollowing(user3.getUsername(), user1.getUsername()));
+        userDAO.clearUsers();
     }
 
 }

@@ -21,16 +21,32 @@
     <title>Document</title>
 </head>
 <body style="display: flex; flex-direction: column;">
-
-    <%      
+ <%
         SqlUserDAO users = (SqlUserDAO) request.getServletContext().getAttribute("users");
         String user = (String) request.getSession().getAttribute("currSession");
-        User currUser = users.getUserByUsername(user);
+        try {
+            if (user == null || users.getUserByUsername(user) == null) {
+                response.sendRedirect("/homepage.jsp");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }%>
+ <%
 
-        String email = currUser.getEmail();
-        String firstName = currUser.getFirstname();
-        String lastName = currUser.getLastname();
-        String username = currUser.getUsername();
+     User currUser = null;
+     try {
+         currUser = users.getUserByUsername(user);
+     } catch (SQLException e) {
+         throw new RuntimeException(e);
+     }
+     String email = null, firstName = null, lastName = null, username = null;
+    if(currUser!=null){
+        email = currUser.getEmail();
+        firstName = currUser.getFirstname();
+        lastName = currUser.getLastname();
+        username = currUser.getUsername();
+    }
+
     %>
 
 

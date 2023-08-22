@@ -9,6 +9,8 @@
 <%@ page import="DAO.SqlPostDAO" %>
 <%@ page import="DAO.Interfaces.AdminDAO" %>
 <%@ page import="DAO.SqlAdminDAO" %>
+<%@ page import="DAO.Interfaces.UserDAO" %>
+<%@ page import="DAO.SqlUserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,6 +29,17 @@
 </head>
 
 <body>
+<%
+    String username = (String) request.getSession().getAttribute("currSession");
+    UserDAO userDAO = (SqlUserDAO) request.getServletContext().getAttribute("users");
+    try {
+        if (username == null || userDAO.getUserByUsername(username) == null) {
+            response.sendRedirect("/homepage.jsp");
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+%>
 <%--header--%>
 <header>
     <div>
