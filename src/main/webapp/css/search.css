@@ -177,3 +177,28 @@ input[type="checkbox"] {
 .searchitem button svg {
     display: block;
 }
+
+:root {
+    scrollbar-color: #fff #042045;
+    scrollbar-width: thin;
+
+    --font: 'Lato', sans-serif;
+    --primary: #79C7C5;
+    --secondary: #A1E2D9;
+    --white: #F9FBFF;
+    --dark: #777777;
+}
+::-webkit-scrollbar {
+    width: 16px;
+}
+::-webkit-scrollbar-track {
+    background: #042045;
+}
+::-webkit-scrollbar-thumb {
+    border: 4px solid #042045;
+    border-radius: 8px;
+    background: #fff;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}
