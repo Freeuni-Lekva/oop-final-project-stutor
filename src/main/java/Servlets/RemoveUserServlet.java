@@ -26,7 +26,6 @@ public class RemoveUserServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("/adminPanel.jsp");
         dispatcher.forward(req, resp);
     }

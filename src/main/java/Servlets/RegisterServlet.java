@@ -14,9 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+.-]+@(.+)$";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("register.jsp").forward(req, resp);
@@ -32,10 +35,10 @@ public class RegisterServlet extends HttpServlet {
         String lastName = req.getParameter("lastname");
         UserDAO userDAO = (SqlUserDAO) getServletContext().getAttribute("users");
 
-        boolean uniqueEmail, uniqueUsername, passCheck = (password.equals(passwordRepeat));
+        boolean uniqueEmail, uniqueUsername, passCheck = (password.equals(passwordRepeat) && !password.equals(""));
 
         try {
-            uniqueEmail = uniqueMail(email, userDAO);
+            uniqueEmail = isValidEmail(email, userDAO);
             uniqueUsername = uniqueUsername(username, userDAO);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -66,14 +69,16 @@ public class RegisterServlet extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private boolean uniqueMail(String email, UserDAO userDAO) throws SQLException {
+    private boolean isValidEmail(String email, UserDAO userDAO) throws SQLException {
         User tmpUser = userDAO.getUserByEmail(email);
-        return tmpUser == null;
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Matcher matcher = pattern.matcher(email);
+        return tmpUser == null && matcher.matches();
     }
 
     private boolean uniqueUsername(String username, UserDAO userDAO) throws SQLException {
         User temp = userDAO.getUserByUsername(username);
-        return temp == null;
+        return temp == null && !username.equals("");
     }
 
     private static String getHash(String password) {

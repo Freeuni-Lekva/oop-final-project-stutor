@@ -20,7 +20,8 @@ section {
 
 section > div:nth-of-type(1),
 section > div:nth-of-type(2),
-section > div:nth-of-type(3) {
+section > div:nth-of-type(3),
+section > div:nth-of-type(4){
     height: 100%;
     width: 20%;
     border-radius: 20px;
@@ -33,10 +34,15 @@ section > div:nth-of-type(3) {
 
 section > div:nth-of-type(1) > p,
 section > div:nth-of-type(2) > p,
-section > div:nth-of-type(3) > p {
+section > div:nth-of-type(3) > p,
+section > div:nth-of-type(4) > p{
     margin-bottom: 10px;
 }
 
+section > div:nth-of-type(3)  > ul > li > a{
+    text-decoration: none;
+    color: inherit;
+}
 
 li {
     list-style-type: none;
@@ -51,7 +57,7 @@ li {
     align-items: center;
 }
 
-section > div:nth-of-type(4) {
+section > .control {
     width: 30%;
     height: 100%;
 
@@ -60,7 +66,7 @@ section > div:nth-of-type(4) {
     align-items: center;
 }
 
-section > div:nth-of-type(4) > input {
+section > .control > input {
     width: 80%;
     height: 40px;
     border-radius: 10px;
@@ -68,24 +74,46 @@ section > div:nth-of-type(4) > input {
     margin-bottom: 10px;
 }
 
-section > div:nth-of-type(4) > div {
+section > .control > div {
     width: 80%;
 }
 
-section > div:nth-of-type(4) > div > div {
+section > .control > div > div {
     width: 100%;
     margin-bottom: 20px;
 }
 
-section > div:nth-of-type(4) > div > div > p {
+section > .control > div > div > p {
     color: white;
     text-transform: uppercase;
     font-size: 18px;
     text-align: center;
 }
 
-section > div:nth-of-type(4) > div > div > button{
-    width: 47%;
+section > .control > div > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section > .control > div > div > div{
+    display: flex;
+    gap: 10px;
+}
+
+section > .control > div > div > div > button{
+    width: 100%;
+    padding: 0px 10px;
     height: 30px;
     border-radius: 30px;
+}
+
+.back > a{
+    margin-left: 30px;
+    color: white;
+    text-decoration: none;
+}
+
+.back{
+    padding-top: 30px;
 }

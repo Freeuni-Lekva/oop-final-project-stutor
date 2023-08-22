@@ -23,7 +23,7 @@
 
     <link rel="stylesheet" href="css/headerStyle.css">
 
-    <link rel="stylesheet" href="css/searchStyle.css">
+    <link rel="stylesheet" href="css/search.css">
 </head>
 
 <body>
@@ -46,7 +46,7 @@
                     String s = "<form action=\"/AdminServlet\" method=\"post\">\n" +
                             "      <button type=\"submit\"><span>\n" +
                             "      adminPanel\n" +
-                            "    </span></button>";
+                            "    </span></button></form>";
                     out.print(s);
                 }
             } catch (SQLException e) {
@@ -94,35 +94,11 @@
 
 
             <div>
-                <p>Sort By:</p>
-                <div>
-                    <div>
-                        <div>
-                            <label>
-                                <input type = "checkbox">
-                                <span>Date</span>
-                            </label>
-
-                            <label>
-                                <input type = "checkbox">
-                                <span>Rank</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <label>
-                                <input type = "checkbox">
-                                <span>Ascending</span>
-                            </label>
-
-                            <label>
-                                <input type = "checkbox">
-                                <span>Descending</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                <select id="levelSelect" name="levelSelect">
+                    <option>all</option>
+                    <option>teach</option>
+                    <option>learn</option>
+                </select>
             </div>
 
             <div class = "container">
@@ -139,6 +115,16 @@
                         if(posts == null) posts = postDao.getAllPosts(POSTTYPE.toPostType("both"));
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
+                    }
+                    String post_id_String = request.getParameter("post_id");
+                    if(post_id_String != null){
+                        posts.clear();
+                        int post_id = Integer.parseInt(post_id_String);
+                        try {
+                            posts.add(postDao.getPostById(post_id));
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     for(Post post : posts) {
                         String s = "<div class = \"searchitem\">\n";

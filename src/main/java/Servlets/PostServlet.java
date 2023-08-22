@@ -28,6 +28,12 @@ public class PostServlet extends HttpServlet {
         String selectedLevel = req.getParameter("levelSelect");
         String postContent = req.getParameter("postTextarea");
 
+        if (postContent.equals("")) {
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/feed.jsp");
+            dispatcher.forward(req, resp);
+            return;
+        }
+
         PostDAO posts = (SqlPostDAO) getServletContext().getAttribute("posts");
 
         Post post = new Post((String)req.getSession().getAttribute("currSession"), selectedSubject,

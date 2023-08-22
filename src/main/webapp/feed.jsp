@@ -15,7 +15,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feed</title>
-  <link rel="stylesheet" href="css/feedStyle.css">
+  <link rel="stylesheet" href="css/feed.css">
   <link rel="stylesheet" href="css/headerStyle.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +47,7 @@
           String s = "<form action=\"/AdminServlet\" method=\"post\">\n" +
                   "      <button type=\"submit\"><span>\n" +
                   "      adminPanel\n" +
-                  "    </span></button>";
+                  "    </span></button></form>";
           out.print(s);
         }
       } catch (SQLException e) {
@@ -69,8 +69,14 @@
   </div>
 </header>
 
-
 <section>
+  <section>
+    <div class="adContent">
+      <p>აქ შეიძლებოდა შენი კომპანიის რეკლამა ყოფილიყო.</p>
+      <p>EMAIL: ikhut21@freeuni.edu.ge</p>
+    </div>
+  </section>
+
   <div>
     <form class ="inputArea" action="/PostServlet" method="post">
       <div>
@@ -84,6 +90,7 @@
              throw new RuntimeException(e);
            }
           for(Subject subject : subjects){
+            if(subject.equals(new Subject("Any subject"))) continue;
             String s = "<option>" + subject.getName() + "</option>\n";
             out.print(s);
           }
@@ -151,6 +158,12 @@
       </div>
     </div>
   </div>
+  <section>
+    <div class="adContent">
+      <p>აქ შეიძლებოდა შენი კომპანიის რეკლამა ყოფილიყო.</p>
+      <p>EMAIL: ikhut21@freeuni.edu.ge</p>
+    </div>
+  </section>
 </section>
 
 </body>

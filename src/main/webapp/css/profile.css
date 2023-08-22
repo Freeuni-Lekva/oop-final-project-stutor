@@ -173,3 +173,7 @@ body{
 .info-btn:focus-visible{
     outline-offset: 1px;
 }
+
+.row > div > h5{
+    font-size: 17px;
+}

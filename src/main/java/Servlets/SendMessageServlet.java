@@ -23,6 +23,12 @@ public class SendMessageServlet extends HttpServlet {
         String receiver = req.getParameter("otherUser");
         String message = req.getParameter("textMessage");
 
+        if(receiver == null || receiver.equals("null")){
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/chat.jsp");
+            dispatcher.forward(req, resp);
+            return;
+        }
+
         Message msg = new Message(sender, receiver, message);
 
         try {
