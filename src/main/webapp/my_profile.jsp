@@ -82,8 +82,16 @@
         </form>
         </div>
     </header>
-<section>
-    <div style="display: grid; grid-template-columns: 1fr 2fr; width: 70%;">
+
+ <section>
+     <section>
+         <div class="adContent">
+             <p>აქ შეიძლებოდა შენი კომპანიის რეკლამა ყოფილიყო.</p>
+             <p>EMAIL: ikhut21@freeuni.edu.ge</p>
+         </div>
+     </section>
+
+    <div style="display: flex; flex-direction: column; width: 70%;">
         <div class="container">
             <div class="profile-left">
                 <img src="./images/profile-image.png">
@@ -96,15 +104,23 @@
         </div>
             <div class = "searchbottom">
                 <h1 style = "display: block">My Posts:</h1>
+                <%
+                    PostDAO postDao = (SqlPostDAO) request.getServletContext().getAttribute("posts");
+                    List<Post> posts;
+                    try {
+                        posts = postDao.getPostByUser(username, POSTTYPE.toPostType("both"));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if(posts.size() == 0){
+                        String s = "<div class = \"noPosts\">\n";
+                        s += "<h1>NO POSTS</h1>\n";
+                        s += "</div>";
+                        out.print(s);
+                    }
+                %>
                 <div class = "results">
                     <%
-                        PostDAO postDao = (SqlPostDAO) request.getServletContext().getAttribute("posts");
-                        List<Post> posts;
-                        try {
-                            posts = postDao.getPostByUser(username, POSTTYPE.toPostType("both"));
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
                         for(Post post : posts){
                             String s = "<div class = \"searchitem\">\n";
                             s += "<p>" + post.getUsername() + "</p>\n";
@@ -119,6 +135,13 @@
                 </div>
             </div>
     </div>
+
+     <section>
+         <div class="adContent">
+             <p>აქ შეიძლებოდა შენი კომპანიის რეკლამა ყოფილიყო.</p>
+             <p>EMAIL: ikhut21@freeuni.edu.ge</p>
+         </div>
+     </section>
 </section>
 
     

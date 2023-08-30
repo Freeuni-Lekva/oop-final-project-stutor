@@ -23,33 +23,17 @@ public class DeleteChatServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException{
         HttpSession session = req.getSession();
-        String current_user = (String) session.getAttribute("current_user_id");
-        SqlChatDAO chatDao = (SqlChatDAO) req.getServletContext().getAttribute("chatdao");
+        String current_user = (String) session.getAttribute("currSession");
+        SqlChatDAO chatDao = (SqlChatDAO) req.getServletContext().getAttribute("chat");
 
         String chatDeleteID = req.getParameter("chatDeleteID");
+
         try {
             chatDao.deleteConversation(current_user, chatDeleteID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        List<String> allMessageUsers = null;
-        try {
-            allMessageUsers = chatDao.getUsers(current_user);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        List<List<Message>> allConversations = null;
-        for(int i = 0; i < allMessageUsers.size(); i++){
-            try {
-                allConversations.add(chatDao.getConversation(current_user, allMessageUsers.get(i)));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        req.setAttribute("allUsers", allMessageUsers);
-        req.setAttribute("allConversations", allConversations);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/chat.jsp");
         dispatcher.forward(req, resp);
     }
