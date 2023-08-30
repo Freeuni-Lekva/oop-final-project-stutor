@@ -19,9 +19,8 @@ public class RemoveSubjectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SubjectDAO subjectDAO = (SqlSubjectDAO) req.getServletContext().getAttribute("subjects");
         String subjectName = req.getParameter("adminText");
-
         try {
-            subjectDAO.removeSubject(subjectName);
+            if(!subjectName.equals("Any subject")) subjectDAO.removeSubject(subjectName);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
